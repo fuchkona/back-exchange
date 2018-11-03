@@ -1,0 +1,1 @@
+{"virtualbox":{"/app":{"owner":"vagrant","group":"vagrant","guestpath":"/app","hostpath":"/home/nikita/web/back-exchange","disabled":false,"__vagrantfile":true}}}
