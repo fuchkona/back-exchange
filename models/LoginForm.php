@@ -76,6 +76,18 @@ class LoginForm extends Model
             $this->_user = User::findByUsername($this->username);
         }
 
+        if (!$this->_user) {
+            $this->_user = User::findByEmail($this->username);
+        }
+
         return $this->_user;
+    }
+
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Username / Email'
+        ];
     }
 }
