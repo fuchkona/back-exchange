@@ -14,7 +14,7 @@ return [
     ],
     'language' => 'en-US',
     'components' => [
-        'db' => $db,
+        'db' => $db['components']['db'],
         'mailer' => [
             'useFileTransport' => true,
         ],
