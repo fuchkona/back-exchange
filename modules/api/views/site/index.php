@@ -36,6 +36,18 @@
 ]</pre>
                     </p>
                 </li>
+                <li>
+                    <p><b>Login test</b></p>
+                    <p><b>Route:</b> /api/site/login-test</p>
+                    <p><b>Method:</b> get</p>
+                    <p><b>Auth:</b> OAuth 2.0, Bearer Token</p>
+                    <p><b>Success:</b>
+                    <pre>"Authorisation was successful"</pre>
+                    </p>
+                    <p><b>Error:</b>
+                    <pre>Unauthorized (#401)</pre>
+                    </p>
+                </li>
             </ul>
         </div>
     </div>

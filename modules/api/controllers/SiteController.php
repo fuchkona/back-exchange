@@ -37,6 +37,10 @@ class SiteController extends Controller
         }
     }
 
+    public function actionLoginTest() {
+        return 'Authorisation was successful';
+    }
+
     protected function verbs()
     {
         return [
