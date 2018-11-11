@@ -23,7 +23,6 @@ use yii\web\IdentityInterface;
  * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
- * @property string $password write-only password
  *
  * @property Task[] $createdTasks
  * @property Task[] $tasksPerformed
@@ -85,14 +84,6 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'full_name', 'auth_key', 'password_hash', 'email', 'time', 'status', 'created_at',
-                'updated_at'], 'required'],
-            [['time', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['password_hash', 'password_reset_token', 'auth_key'], 'string'],
-            [['username'], 'string', 'max' => 150],
-            [['full_name', 'email'], 'string', 'max' => 300],
-            [['id'], 'safe'],
-            [['username', 'password_reset_token', 'email'], 'unique'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
@@ -265,4 +256,6 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return new \app\models\query\UserQuery(get_called_class());
     }
+
+
 }
