@@ -13,8 +13,8 @@ class m181111_010752_add_role_column_to_user_table extends Migration
     public function safeUp()
     {
         $this->addColumn('user', 'role',
-            $this->integer()->notNull()->after('email')
-                ->defaultValue(0)->comment('Time in minutes'));
+            $this->smallInteger()->unsigned()->notNull()->after('status')
+                ->defaultValue(0));
     }
 
     /**
@@ -22,5 +22,6 @@ class m181111_010752_add_role_column_to_user_table extends Migration
      */
     public function safeDown()
     {
+        $this->dropColumn('user', 'role');
     }
 }
