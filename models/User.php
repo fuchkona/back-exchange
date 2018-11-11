@@ -20,6 +20,7 @@ use yii\web\IdentityInterface;
  * @property integer $time
  * @property string $auth_key
  * @property integer $status
+ * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
@@ -47,6 +48,11 @@ class User extends ActiveRecord implements IdentityInterface
     const RELATION_FILES = 'files';
     const RELATION_COMMENTS = 'comments';
     const RELATION_REQUESTS = 'requests';
+
+
+    const ROLE_USER = 0;
+    const ROLE_MODERATOR = 123;
+    const ROLE_ADMIN = 255;
 
 
     /**
