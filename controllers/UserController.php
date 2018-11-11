@@ -2,9 +2,11 @@
 
 namespace app\controllers;
 
+use app\services\UserService;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -20,6 +22,26 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            $allowedRoles = [User::ROLE_MODERATOR, User::ROLE_ADMIN];
+                            $userService = new UserService();
+                            return $userService->checkUserRoles(Yii::$app->user->identity, $allowedRoles);
+
+                        }
+                    ],
+                ],
+                'denyCallback' => function(){
+                    Yii::$app->session
+                        ->setFlash('danger', 'Доступ закрыт, пожалуйста авторизуйтесь под учеткой админа или модератора');
+                    $this->redirect('/site/login');
+                }
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
