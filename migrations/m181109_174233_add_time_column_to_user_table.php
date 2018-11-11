@@ -12,9 +12,9 @@ class m181109_174233_add_time_column_to_user_table extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('user', 'time',
-            $this->integer()->notNull()->after('email')
-                ->defaultValue(0)->comment('Time in minutes'));
+        $this->addColumn('user', 'role',
+            $this->integer()->notNull()->after('status')
+                ->defaultValue(0));
     }
 
     /**
@@ -22,7 +22,7 @@ class m181109_174233_add_time_column_to_user_table extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('user', 'time');
+        $this->dropColumn('user', 'role');
 
         return true;
     }
