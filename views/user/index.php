@@ -31,7 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'full_name',
             'auth_key',
             'password_hash',
-            'role',
+            [
+                'attribute' => 'role',
+                'value' => function(\app\models\User $model){
+                    return \app\models\User::ROLE_LIST[$model->role];
+                }
+            ],
             //'password_reset_token',
             //'email:email',
             //'time:datetime',
