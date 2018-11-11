@@ -19,7 +19,7 @@ class UserService
      * @param array $roles
      * @return bool
      */
-    public function checkUserRoles(IdentityInterface $user, array $roles){
+    public static function checkUserRoles(IdentityInterface $user, array $roles){
         return in_array($user->role, $roles);
     }
 
