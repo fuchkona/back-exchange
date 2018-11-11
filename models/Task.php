@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 
 /**
@@ -49,7 +50,7 @@ class Task extends \yii\db\ActiveRecord
     public function behaviors()
     {
         return [
-            \yii\behaviors\TimestampBehavior::className(),
+            TimestampBehavior::className(),
         ];
     }
 
@@ -59,11 +60,10 @@ class Task extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'description', 'owner_id', 'deadline', 'created_at', 'updated_at'], 'required'],
+            [['title', 'description', 'owner_id', 'deadline'], 'required'],
             [['description'], 'string'],
-            [['owner_id', 'worker_id', 'contract_time', 'deadline', 'created_at', 'updated_at'], 'integer'],
+            [['owner_id', 'worker_id', 'contract_time', 'deadline'], 'integer'],
             [['title'], 'string', 'max' => 300],
-            [['id'], 'safe'],
             [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['owner_id' => 'id']],
             [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['worker_id' => 'id']],
         ];

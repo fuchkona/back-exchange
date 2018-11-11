@@ -30,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'task_id',
             'author_id',
             'text:ntext',
-            'created_at',
-            //'updated_at',
+            'created_at:datetime',
+            'updated_at:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

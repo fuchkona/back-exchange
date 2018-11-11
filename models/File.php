@@ -41,7 +41,6 @@ class File extends \yii\db\ActiveRecord
             [['task_id', 'user_id'], 'integer'],
             [['description'], 'string'],
             [['filename', 'display_name'], 'string', 'max' => 300],
-            [['id'], 'safe'],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];

@@ -34,9 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'owner_id',
             'worker_id',
             'contract_time:datetime',
-            'deadline',
-            'created_at',
-            'updated_at',
+            'deadline:datetime',
+            'created_at:datetime',
+            'updated_at:datetime',
         ],
     ]) ?>
 

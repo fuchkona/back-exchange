@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "comments".
@@ -31,15 +32,24 @@ class Comment extends \yii\db\ActiveRecord
     }
 
     /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['task_id', 'author_id', 'text', 'created_at', 'updated_at'], 'required'],
-            [['task_id', 'author_id', 'created_at', 'updated_at'], 'integer'],
+            [['task_id', 'author_id', 'text'], 'required'],
+            [['task_id', 'author_id'], 'integer'],
             [['text'], 'string'],
-            [['id'], 'safe'],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
             [['author_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['author_id' => 'id']],
         ];

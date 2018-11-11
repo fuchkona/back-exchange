@@ -36,7 +36,6 @@ class Request extends \yii\db\ActiveRecord
         return [
             [['task_id', 'requester_id', 'need_time'], 'required'],
             [['task_id', 'requester_id', 'need_time'], 'integer'],
-            [['id'], 'safe'],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
             [['requester_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['requester_id' => 'id']],
         ];

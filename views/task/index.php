@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'owner_id',
             'worker_id',
             //'contract_time:datetime',
-            //'deadline',
+            'deadline:datetime',
             //'created_at',
             //'updated_at',
 

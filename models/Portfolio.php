@@ -37,7 +37,6 @@ class Portfolio extends \yii\db\ActiveRecord
             [['user_id'], 'integer'],
             [['description'], 'string'],
             [['title', 'url'], 'string', 'max' => 300],
-            [['id'], 'safe'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
