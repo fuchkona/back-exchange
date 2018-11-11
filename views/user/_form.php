@@ -26,6 +26,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'role')->dropDownList(\app\models\User::ROLE_LIST); ?>
+
     <?= $form->field($model, 'time')->textInput() ?>
 
     <?= $form->field($model, 'status')->textInput() ?>

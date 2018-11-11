@@ -54,6 +54,12 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_MODERATOR = 123;
     const ROLE_ADMIN = 255;
 
+    const ROLE_LIST = [
+        self::ROLE_ADMIN => 'Admin',
+        self::ROLE_MODERATOR => 'Moderator',
+        self::ROLE_USER => 'User'
+    ];
+
 
     /**
      * @inheritdoc
