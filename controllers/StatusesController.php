@@ -2,12 +2,14 @@
 
 namespace app\controllers;
 
+use app\controllers\base\BaseController;
 use app\models\User;
 use app\services\UserService;
 use Yii;
 use app\models\Statuses;
 use app\models\StatusesSearch;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -15,41 +17,21 @@ use yii\filters\VerbFilter;
 /**
  * StatusesController implements the CRUD actions for Statuses model.
  */
-class StatusesController extends Controller
+class StatusesController extends BaseController
 {
     /**
      * {@inheritdoc}
      */
     public function behaviors()
     {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rules, $action) {
-                            $allowedRoles = [User::ROLE_MODERATOR, User::ROLE_ADMIN];
-                            $userService = new UserService();
-                            return $userService->checkUserRoles(Yii::$app->user->identity, $allowedRoles);
-
-                        }
-                    ],
-                ],
-                'denyCallback' => function(){
-                    Yii::$app->session
-                        ->setFlash('danger', 'Доступ закрыт, пожалуйста авторизуйтесь под учеткой админа или модератора');
-                    $this->redirect('/site/login');
-                }
-            ],
+        return ArrayHelper::merge(parent::behaviors(), [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
             ],
-        ];
+        ]);
     }
 
     /**
