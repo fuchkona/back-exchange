@@ -127,3 +127,7 @@ a.desc:after {
 .help-block.help-block-error, .has-error .control-label {
     color: #ff8c00 !important;
 }
+
+.has-success .control-label{
+    color: lightgreen !important;
+}

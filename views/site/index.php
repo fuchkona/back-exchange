@@ -9,7 +9,7 @@ $this->title = 'Time Exchange';
     <div class="jumbotron">
         <h1>Привествую</h1>
 
-        <p class="lead">Вы попали в админку Time Exchange</p>
+        <p class="lead">Вы в админкe Time Exchange</p>
 
     </div>
 
