@@ -14,7 +14,7 @@ use app\models\ContactForm;
 class SiteController extends Controller
 {
 
-    protected function customBehavior()
+    public function behaviors()
     {
         return [
             'access' => [
