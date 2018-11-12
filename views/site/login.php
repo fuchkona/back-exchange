@@ -4,22 +4,40 @@
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\LoginForm */
 
+use app\assets\AppAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
+
+AppAsset::register($this);
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+<?php $this->beginPage() ?>
+    <!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+    <head>
+        <meta charset="<?= Yii::$app->charset ?>">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <?= Html::csrfMetaTags() ?>
+        <title><?= Html::encode($this->title) ?></title>
+        <?php $this->head() ?>
+    </head>
+<body style="background-color: #25728c; height: 0">
+<?php $this->beginBody() ?>
+<div class="login__container">
+<section class="site-login">
+    <header class="login_header">
+        <h1><?= Html::encode('Time exchange') ?></h1>
 
-    <p>Please fill out the following fields to login:</p>
-
+        <p>Пожалуйста авторизуйтесь</p>
+    </header>
     <?php $form = ActiveForm::begin([
         'id' => 'login-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-8\">{error}</div>",
+            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"login__error col-lg-8\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-1 control-label'],
         ],
     ]); ?>
@@ -34,14 +52,17 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::submitButton('Логин', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+                <?= Html::a('Зарегистрироваться', '/site/signup', ['class' => 'btn btn-danger'])?>
             </div>
         </div>
 
     <?php ActiveForm::end(); ?>
 
-    <div class="col-lg-offset-1" style="color:#999;">
-        You may login with <strong>admin/admin</strong> or <strong>demo/demo</strong>.<br>
-        To modify the username/password, please check out the code <code>app\models\User::$users</code>.
-    </div>
+
+</section>
 </div>
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>
