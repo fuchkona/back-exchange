@@ -42,7 +42,8 @@ AppAsset::register($this);
             <?= $form->field($model, 'email') ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
             <div class="form-group">
-                <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>
+                <?= Html::a('Уже есть учетка?', '/site/login', ['class' => 'btn btn-primary']) ?>
             </div>
             <?php ActiveForm::end(); ?>
 
