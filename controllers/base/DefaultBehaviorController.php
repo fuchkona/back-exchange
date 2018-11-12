@@ -10,19 +10,26 @@ namespace app\controllers\base;
 
 use app\models\User;
 use app\services\UserService;
+use phpDocumentor\Reflection\Types\This;
 use Yii;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\ForbiddenHttpException;
 
-class BaseController extends Controller
+abstract class DefaultBehaviorController extends Controller
 {
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors()
+    final public function behaviors()
+    {
+        return ArrayHelper::merge($this->defaultBehavior(), $this->customBehavior());
+    }
+
+    final private function defaultBehavior()
     {
         return [
             'access' => [
@@ -42,13 +49,9 @@ class BaseController extends Controller
                     throw new ForbiddenHttpException('Доступ закрыт, пожалуйста авторизуйтесь под учеткой админа или модератора');
                 }
             ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
         ];
     }
+
+    abstract protected function customBehavior() ;
 
 }

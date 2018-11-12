@@ -2,36 +2,29 @@
 
 namespace app\controllers;
 
-use app\controllers\base\BaseController;
-use app\models\User;
-use app\services\UserService;
+use app\controllers\base\DefaultBehaviorController;
 use Yii;
 use app\models\Comment;
 use app\models\CommentSearch;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * CommentController implements the CRUD actions for Comment model.
  */
-class CommentController extends BaseController
+class CommentController extends DefaultBehaviorController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
+
+    protected function customBehavior()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
+        return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
-            ],
-        ]);
+            ]
+        ];
     }
 
     /**
@@ -129,4 +122,5 @@ class CommentController extends BaseController
 
         throw new NotFoundHttpException('The requested page does not exist.');
     }
+
 }

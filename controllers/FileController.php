@@ -2,36 +2,29 @@
 
 namespace app\controllers;
 
-use app\controllers\base\BaseController;
-use app\models\User;
-use app\services\UserService;
+use app\controllers\base\DefaultBehaviorController;
 use Yii;
 use app\models\File;
 use app\models\FileSearch;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * FileController implements the CRUD actions for File model.
  */
-class FileController extends BaseController
+class FileController extends DefaultBehaviorController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
+
+    protected function customBehavior()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
+        return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
-            ],
-        ]);
+            ]
+        ];
     }
 
     /**

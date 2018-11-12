@@ -2,36 +2,29 @@
 
 namespace app\controllers;
 
-use app\controllers\base\BaseController;
-use app\models\User;
-use app\services\UserService;
+use app\controllers\base\DefaultBehaviorController;
 use Yii;
 use app\models\Request;
 use app\models\RequestSearch;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * RequestController implements the CRUD actions for Request model.
  */
-class RequestController extends BaseController
+class RequestController extends DefaultBehaviorController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
+
+    protected function customBehavior()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
+        return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
-            ],
-        ]);
+            ]
+        ];
     }
 
     /**
