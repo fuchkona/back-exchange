@@ -13,10 +13,8 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
+
+    protected function customBehavior()
     {
         return [
             'access' => [

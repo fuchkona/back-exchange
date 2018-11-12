@@ -2,37 +2,29 @@
 
 namespace app\controllers;
 
-use app\controllers\base\BaseController;
-use app\models\User;
-use app\services\UserService;
-use Faker\Provider\Base;
+use app\controllers\base\DefaultBehaviorController;
 use Yii;
 use app\models\Portfolio;
 use app\models\PortfolioSearch;
-use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
-use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
  * PortfolioController implements the CRUD actions for Portfolio model.
  */
-class PortfolioController extends BaseController
+class PortfolioController extends DefaultBehaviorController
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
+
+    protected function customBehavior()
     {
-        return ArrayHelper::merge(parent::behaviors(), [
+        return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
                 ],
-            ],
-        ]);
+            ]
+        ];
     }
 
     /**
