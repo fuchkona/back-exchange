@@ -18,7 +18,7 @@ class StatusesLogController extends DefaultBehaviorController
     /**
      * {@inheritdoc}
      */
-    protected function customBehavior()
+    protected function customBehaviors()
     {
         return [
             'verbs' => [

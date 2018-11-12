@@ -15,7 +15,7 @@ use yii\filters\VerbFilter;
 class FileController extends DefaultBehaviorController
 {
 
-    protected function customBehavior()
+    protected function customBehaviors()
     {
         return [
             'verbs' => [

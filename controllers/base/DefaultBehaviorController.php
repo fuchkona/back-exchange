@@ -26,10 +26,10 @@ abstract class DefaultBehaviorController extends Controller
      */
     final public function behaviors()
     {
-        return ArrayHelper::merge($this->defaultBehavior(), $this->customBehavior());
+        return ArrayHelper::merge($this->defaultBehaviors(), $this->customBehaviors());
     }
 
-    final private function defaultBehavior()
+    final private function defaultBehaviors()
     {
         return [
             'access' => [
@@ -52,6 +52,6 @@ abstract class DefaultBehaviorController extends Controller
         ];
     }
 
-    abstract protected function customBehavior() ;
+    abstract protected function customBehaviors() ;
 
 }
