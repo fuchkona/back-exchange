@@ -3,6 +3,7 @@
 namespace app\modules\api;
 
 use yii\filters\auth\HttpBearerAuth;
+use yii\web\Response;
 
 /**
  * restApi module definition class
@@ -24,6 +25,7 @@ class Module extends \yii\base\Module
             'except' => [
                 'site/index',
                 'site/login',
+                'site/signup',
             ],
         ];
         return $behaviors;
@@ -35,6 +37,7 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+        \Yii::$app->response->format = Response::FORMAT_JSON;
         \Yii::$app->user->enableSession = false;
         // custom initialization code goes here
     }

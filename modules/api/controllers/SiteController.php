@@ -3,6 +3,8 @@
 namespace app\modules\api\controllers;
 
 use app\modules\api\models\LoginForm;
+use app\modules\api\models\SignupForm;
+use Yii;
 use yii\rest\Controller;
 use yii\web\Response;
 
@@ -38,7 +40,17 @@ class SiteController extends Controller
     }
 
     public function actionLoginTest() {
-        return 'Authorisation was successful';
+        return "Authorisation was successful! User: " . Yii::$app->user->identity->username;
+    }
+
+    public function actionSignup() {
+        $model = new SignupForm();
+        $model->load(Yii::$app->request->bodyParams, '');
+        if ($user = $model->signup()) {
+            return $user;
+        } else {
+            return $model;
+        }
     }
 
     protected function verbs()
