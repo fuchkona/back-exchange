@@ -140,20 +140,12 @@
                                     "username": "username",
                                     "full_name": "display name",
                                     "email": "email",
-                                    "time": time,
-                                    "status": status,
-                                    "created_at": created at,
-                                    "updated_at": updated_at
                                     },
                                     "worker": {
                                     "id": 1,
                                     "username": "username",
                                     "full_name": "display name",
                                     "email": "email",
-                                    "time": time,
-                                    "status": status,
-                                    "created_at": created at,
-                                    "updated_at": updated_at
                                     }
                                     },
                                     {(another task)},
