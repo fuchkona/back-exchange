@@ -59,6 +59,15 @@ class User extends ActiveRecord implements IdentityInterface
         self::ROLE_USER => 'User'
     ];
 
+    public function fields()
+    {
+        return [
+            'username',
+            'full_name',
+            'email',
+            'token' => 'auth_key',
+        ];
+    }
 
     /**
      * @inheritdoc

@@ -19,20 +19,4 @@ class TaskController extends ActiveController
     public $modelClass = 'app\modules\api\models\Task';
 
 
-    public function actions(){
-        $actions = parent::actions();
-        unset($actions['index']);
-        return $actions;
-    }
-
-    public function actionIndex(){
-        $activeData = new ActiveDataProvider([
-            'query' => Task::find(),
-            'pagination' => [
-                'defaultPageSize' => 5,
-            ],
-        ]);
-        return $activeData;
-    }
-
 }

@@ -22,8 +22,12 @@ class Task extends \app\models\Task
             'deadline',
             'created_at',
             'updated_at',
-            'owner',
-            'worker',
+            'owner' => function(){
+                return User::findOne($this->owner_id);
+            },
+            'worker' => function(){
+                return User::findOne($this->worker_id);
+            },
         ];
     }
 

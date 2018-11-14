@@ -17,19 +17,19 @@ class Module extends \yii\base\Module
     public $defaultRoute = 'site/index';
 
 
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
-            'class' => HttpBearerAuth::className(),
-            'except' => [
-                'site/index',
-                'site/login',
-                'site/signup',
-            ],
-        ];
-        return $behaviors;
-    }
+//    public function behaviors()
+//    {
+//        $behaviors = parent::behaviors();
+//        $behaviors['authenticator'] = [
+//            'class' => HttpBearerAuth::className(),
+//            'except' => [
+//                'site/index',
+//                'site/login',
+//                'site/signup',
+//            ],
+//        ];
+//        return $behaviors;
+//    }
 
     /**
      * {@inheritdoc}
