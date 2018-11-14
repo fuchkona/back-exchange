@@ -24,27 +24,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
             'username',
             'full_name',
-            'auth_key',
-            'password_hash',
+            'email:email',
+            'time',
+            [
+                'attribute' => 'status',
+                'value' => function(\app\models\User $model){
+                    return \app\models\User::STATUS_LIST[$model->status];
+                },
+                'filter' => \app\models\User::STATUS_LIST
+            ],
             [
                 'attribute' => 'role',
                 'value' => function(\app\models\User $model){
                     return \app\models\User::ROLE_LIST[$model->role];
-                }
+                },
+                'filter' => \app\models\User::ROLE_LIST
             ],
+            //'auth_key',
+            //'password_hash',
             //'password_reset_token',
-            //'email:email',
-            //'time:datetime',
-            //'status',
-
             //'created_at',
             //'updated_at',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

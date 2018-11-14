@@ -31,10 +31,15 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'username',
             'full_name',
-            'password_reset_token',
             'email:email',
-            'time:datetime',
-            'status',
+            [
+                'attribute' => 'time',
+                'value' => floor($model->time/60) . ' ч. ' . $model->time%60 . ' мин.'
+            ],
+            [
+                'attribute' => 'status',
+                'value' => \app\models\User::STATUS_LIST[$model->status]
+            ],
             'created_at:datetime',
             'updated_at:datetime',
         ],

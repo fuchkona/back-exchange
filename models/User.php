@@ -23,6 +23,7 @@ use yii\web\IdentityInterface;
  * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $password write-only password
  *
  * @property Task[] $createdTasks
  * @property Task[] $tasksPerformed
@@ -40,6 +41,10 @@ class User extends ActiveRecord implements IdentityInterface
         self::STATUS_DELETED => 'удален',
         self::STATUS_ACTIVE => 'активен'
     ];
+
+    const SCENARIO_ADMIN_CREATE = 'admin_create';
+    const SCENARIO_ADMIN_UPDATE = 'admin_update';
+
 
     const RELATION_CREATED_TASKS = 'createdTasks';
     const RELATION_TASKS_PERFORMED = 'tasksPerformed';
@@ -59,6 +64,11 @@ class User extends ActiveRecord implements IdentityInterface
         self::ROLE_USER => 'User'
     ];
 
+    private $password;
+
+    /**
+     * @return array
+     */
     public function fields()
     {
         return [
@@ -93,8 +103,18 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username', 'full_name', 'password_hash', 'password_reset_token', 'auth_key'], 'string'],
+            [['time', 'status', 'role'], 'integer'],
+            [['email'], 'email'],
+            [['password'], 'string', 'min' => 6],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['username', 'full_name', 'email'], 'required',
+                'on' => [self::SCENARIO_ADMIN_CREATE, self::SCENARIO_ADMIN_UPDATE]],
+            [['username', 'email'], 'unique',
+                'on' => [self::SCENARIO_ADMIN_CREATE, self::SCENARIO_ADMIN_UPDATE]],
+            [['password'], 'required', 'on' => self::SCENARIO_ADMIN_CREATE],
+
         ];
     }
 
@@ -116,6 +136,22 @@ class User extends ActiveRecord implements IdentityInterface
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
+    }
+
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if($insert) {
+            $this->generateAuthKey();
+        }
+        return true;
     }
 
     /**
@@ -198,7 +234,18 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        if ($password) {
+            $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        }
+        $this->password = $password;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     /**
