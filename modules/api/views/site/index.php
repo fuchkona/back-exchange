@@ -31,16 +31,19 @@
                             </p>
                             <p><b>Error:</b>
                                 <code style="white-space: pre-line">
-                                    [
                                     {
-                                    "field": "username",
-                                    "message": "Username cannot be blank."
-                                    },
-                                    {
-                                    "field": "password",
-                                    "message": "Password cannot be blank."
+                                    "name": "Not Found",
+                                    "message": "Page not found.",
+                                    "code": 0,
+                                    "status": 404,
+                                    "type": "yii\\web\\NotFoundHttpException",
+                                    "previous": {
+                                    "name": "Invalid Route",
+                                    "message": "Unable to resolve the request \"api/tasksf\".",
+                                    "code": 0,
+                                    "type": "yii\\base\\InvalidRouteException"
                                     }
-                                    ]</code>
+                                    }</code>
                             </p>
                         </div>
                     </div>
@@ -110,6 +113,68 @@
                                     "message": "Password cannot be blank."
                                     }
                                     ]
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#getTask">
+                        <b>Get tasks</b>
+                    </button>
+                    <div id="getTask" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/tasks</p>
+                            <p><b>Method:</b> get</p>
+                            <p><b>Form data:</b> page, per-page</p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    [
+                                    {
+                                    "id": 1,
+                                    "title": "title task",
+                                    "description": "description task",
+                                    "contract_time": contract time,
+                                    "deadline": deadline,
+                                    "created_at": created at,
+                                    "updated_at": updated at,
+                                    "owner": {
+                                    "id": 1,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    "time": time,
+                                    "status": status,
+                                    "created_at": created at,
+                                    "updated_at": updated_at
+                                    },
+                                    "worker": {
+                                    "id": 1,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    "time": time,
+                                    "status": status,
+                                    "created_at": created at,
+                                    "updated_at": updated_at
+                                    }
+                                    },
+                                    {(another task)},
+                                    {(another task)}
+                                    ]
+
+                                    owners and worker extra_field:
+                                    {
+                                        "time": time,
+                                        "status": status,
+                                        "created_at": created at,
+                                        "update_at": updated at
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+
                                 </code>
                             </p>
                         </div>

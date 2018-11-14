@@ -15,10 +15,20 @@ class User extends \app\models\User
     public function fields()
     {
         return [
+            'id',
             'username',
             'full_name',
             'email',
-            'token' => 'auth_key',
+        ];
+    }
+
+    public function extraFields()
+    {
+        return [
+            'time',
+            'status',
+            'created_at',
+            'update_at'
         ];
     }
 
