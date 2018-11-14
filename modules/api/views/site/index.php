@@ -31,19 +31,16 @@
                             </p>
                             <p><b>Error:</b>
                                 <code style="white-space: pre-line">
+                                    [
                                     {
-                                    "name": "Not Found",
-                                    "message": "Page not found.",
-                                    "code": 0,
-                                    "status": 404,
-                                    "type": "yii\\web\\NotFoundHttpException",
-                                    "previous": {
-                                    "name": "Invalid Route",
-                                    "message": "Unable to resolve the request \"api/tasksf\".",
-                                    "code": 0,
-                                    "type": "yii\\base\\InvalidRouteException"
+                                    "field": "username",
+                                    "message": "Username cannot be blank."
+                                    },
+                                    {
+                                    "field": "password",
+                                    "message": "Password cannot be blank."
                                     }
-                                    }</code>
+                                    ]</code>
                             </p>
                         </div>
                     </div>
@@ -174,7 +171,19 @@
                             </p>
                             <p><b>Error:</b>
                                 <code style="white-space: pre-line">
-
+                                    {
+                                    "name": "Not Found",
+                                    "message": "Page not found.",
+                                    "code": 0,
+                                    "status": 404,
+                                    "type": "yii\\web\\NotFoundHttpException",
+                                    "previous": {
+                                    "name": "Invalid Route",
+                                    "message": "Unable to resolve the request \"api/tasksf\".",
+                                    "code": 0,
+                                    "type": "yii\\base\\InvalidRouteException"
+                                    }
+                                    }
                                 </code>
                             </p>
                         </div>
