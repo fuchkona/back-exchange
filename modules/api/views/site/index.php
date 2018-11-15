@@ -181,6 +181,112 @@
                         </div>
                     </div>
                 </li>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#getOneTask">
+                        <b>Get one task</b>
+                    </button>
+                    <div id="getOneTask" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/tasks/{id task}</p>
+                            <p><b>Method:</b> get</p>
+                            <p><b>Form data:</b> </p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "id": 1,
+                                    "title": "title task",
+                                    "description": "description task",
+                                    "contract_time": contract time,
+                                    "deadline": deadline,
+                                    "created_at": created at,
+                                    "updated_at": updated at,
+                                    "owner": {
+                                    "id": 1,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    },
+                                    "worker": {
+                                    "id": 1,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    }
+                                    }
+
+                                    owners and worker extra_field:
+                                    {
+                                    "time": time,
+                                    "status": status,
+                                    "created_at": created at,
+                                    "update_at": updated at
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "name": "Not Found",
+                                    "message": "Object not found: 55",
+                                    "code": 0,
+                                    "status": 404,
+                                    "type": "yii\\web\\NotFoundHttpException"
+                                    }
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#createTask">
+                        <b>Create a task</b>
+                    </button>
+                    <div id="getOneTask" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/task/create</p>
+                            <p><b>Method:</b> post</p>
+                            <p><b>Form data:</b> title, description, contract time, owner_id, deadline</p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "id": 1,
+                                    "title": "title task",
+                                    "description": "description task",
+                                    "contract_time": contract time,
+                                    "deadline": deadline,
+                                    "created_at": created at,
+                                    "updated_at": updated at,
+                                    "owner": {
+                                    "id": 1,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    },
+                                    "worker": null
+                                    }
+
+                                    owners and worker extra_field:
+                                    {
+                                    "time": time,
+                                    "status": status,
+                                    "created_at": created at,
+                                    "update_at": updated at
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+                                    [
+                                    {"field":"title","message":"Title cannot be blank."},
+                                    {"field":"description","message":"Description cannot be blank."},
+                                    {"field":"owner_id","message":"Owner ID cannot be blank."},
+                                    {"field":"deadline","message":"Deadline cannot be blank."}
+                                    ]
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
