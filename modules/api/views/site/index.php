@@ -117,13 +117,13 @@
                 </li>
                 <li>
                     <button class="btn btn-link" data-toggle="collapse" data-target="#getTask">
-                        <b>Get tasks</b>
+                        <b>Get tasks</b> - getting tasks with or without pagination
                     </button>
                     <div id="getTask" class="collapse panel panel-primary">
                         <div class="panel-body">
                             <p><b>Route:</b> /api/tasks</p>
                             <p><b>Method:</b> get</p>
-                            <p><b>Form data:</b> page, per-page</p>
+                            <p><b>Form data:</b> without params for getting all tasks / with params for pagination: page, per-page</p>
                             <p><b>Success:</b>
                                 <code style="white-space: pre-line">
                                     [
@@ -183,7 +183,7 @@
                 </li>
                 <li>
                     <button class="btn btn-link" data-toggle="collapse" data-target="#getOneTask">
-                        <b>Get one task</b>
+                        <b>Get one task</b> - Getting one task by task id
                     </button>
                     <div id="getOneTask" class="collapse panel panel-primary">
                         <div class="panel-body">
@@ -239,9 +239,9 @@
                 </li>
                 <li>
                     <button class="btn btn-link" data-toggle="collapse" data-target="#createTask">
-                        <b>Create a task</b>
+                        <b>Create task</b> - Creating task
                     </button>
-                    <div id="getOneTask" class="collapse panel panel-primary">
+                    <div id="createTask" class="collapse panel panel-primary">
                         <div class="panel-body">
                             <p><b>Route:</b> /api/task/create</p>
                             <p><b>Method:</b> post</p>
@@ -282,6 +282,36 @@
                                     {"field":"owner_id","message":"Owner ID cannot be blank."},
                                     {"field":"deadline","message":"Deadline cannot be blank."}
                                     ]
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#deleteTask">
+                        <b>Delete task</b> - Deleting task by task id
+                    </button>
+                    <div id="deleteTask" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/task/delete</p>
+                            <p><b>Method:</b> delete</p>
+                            <p><b>Form data:</b> task_id</p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                        "result": "success"
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "name":"Not Found",
+                                    "message":"Task is not found",
+                                    "code":0,
+                                    "status":404,
+                                    "type":"yii\\web\\NotFoundHttpException"
+                                    }
                                 </code>
                             </p>
                         </div>

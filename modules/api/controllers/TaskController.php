@@ -10,8 +10,6 @@ namespace app\modules\api\controllers;
 
 
 use app\models\Task;
-use yii\data\ActiveDataProvider;
-use yii\db\StaleObjectException;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 
