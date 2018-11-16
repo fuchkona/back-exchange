@@ -115,6 +115,16 @@
                         </div>
                     </div>
                 </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">TaskController</div>
+        <div class="panel-body">
+            <p><b>Route:</b> /api/tasks/</p>
+            <p><b>Actions:</b></p>
+            <ul>
                 <li>
                     <button class="btn btn-link" data-toggle="collapse" data-target="#getTask">
                         <b>Get tasks</b> - getting tasks with or without pagination
@@ -123,7 +133,8 @@
                         <div class="panel-body">
                             <p><b>Route:</b> /api/tasks</p>
                             <p><b>Method:</b> get</p>
-                            <p><b>Form data:</b> without params for getting all tasks / with params for pagination: page, per-page</p>
+                            <p><b>Form data:</b> without params for getting all tasks / with params for pagination:
+                                page, per-page</p>
                             <p><b>Success:</b>
                                 <code style="white-space: pre-line">
                                     [
@@ -154,10 +165,10 @@
 
                                     owners and worker extra_field:
                                     {
-                                        "time": time,
-                                        "status": status,
-                                        "created_at": created at,
-                                        "update_at": updated at
+                                    "time": time,
+                                    "status": status,
+                                    "created_at": created at,
+                                    "update_at": updated at
                                     }
                                 </code>
                             </p>
@@ -189,7 +200,7 @@
                         <div class="panel-body">
                             <p><b>Route:</b> /api/tasks/{id task}</p>
                             <p><b>Method:</b> get</p>
-                            <p><b>Form data:</b> </p>
+                            <p><b>Form data:</b></p>
                             <p><b>Success:</b>
                                 <code style="white-space: pre-line">
                                     {
@@ -299,7 +310,7 @@
                             <p><b>Success:</b>
                                 <code style="white-space: pre-line">
                                     {
-                                        "result": "success"
+                                    "result": "success"
                                     }
                                 </code>
                             </p>
