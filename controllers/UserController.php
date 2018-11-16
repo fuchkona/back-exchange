@@ -6,6 +6,7 @@ use app\controllers\base\DefaultBehaviorController;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use yii\helpers\VarDumper;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
@@ -65,6 +66,7 @@ class UserController extends DefaultBehaviorController
     public function actionCreate()
     {
         $model = new User();
+        $model->setScenario(User::SCENARIO_ADMIN_CREATE);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -85,6 +87,7 @@ class UserController extends DefaultBehaviorController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario(User::SCENARIO_ADMIN_UPDATE);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
