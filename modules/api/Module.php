@@ -17,6 +17,8 @@ class Module extends \yii\base\Module
     public $defaultRoute = 'site/index';
 
 
+
+
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -28,6 +30,7 @@ class Module extends \yii\base\Module
                 'site/signup',
             ],
         ];
+
         return $behaviors;
     }
 
@@ -39,6 +42,23 @@ class Module extends \yii\base\Module
         parent::init();
         \Yii::$app->response->format = Response::FORMAT_JSON;
         \Yii::$app->user->enableSession = false;
-        // custom initialization code goes here
+        $this->setResponseFormat();
+    }
+
+    /**
+     * Метод для установки формата ответа json
+     */
+    private function setResponseFormat()
+    {
+        $response = \Yii::$app->response;
+
+        $response->on(Response::EVENT_BEFORE_SEND, function ($event) {
+            $response = $event->sender;
+
+            $response->data = [
+                'success' => $response->isSuccessful,
+                'data' => $response->data
+            ];
+        });
     }
 }

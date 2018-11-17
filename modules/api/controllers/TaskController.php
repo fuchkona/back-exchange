@@ -18,13 +18,11 @@ class TaskController extends ActiveController
 
     public $modelClass = 'app\modules\api\models\Task';
 
-
     public function actions(){
         $actions = parent::actions();
         unset($actions['delete']);
         return $actions;
     }
-
     public function actionDelete($task_id)
     {
         try {
@@ -32,6 +30,6 @@ class TaskController extends ActiveController
         } catch (\Throwable $e) {
             throw new NotFoundHttpException('Task is not found');
         }
-        return ['result' => 'success'];
+        return ['The task is removed'];
     }
 }
