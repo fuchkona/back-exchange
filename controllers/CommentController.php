@@ -63,6 +63,8 @@ class CommentController extends DefaultBehaviorController
     public function actionCreate()
     {
         $model = new Comment();
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
+        $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -70,6 +72,9 @@ class CommentController extends DefaultBehaviorController
 
         return $this->render('create', [
             'model' => $model,
+            'users' => $users,
+            'tasks' => $tasks
+
         ]);
     }
 
@@ -83,6 +88,8 @@ class CommentController extends DefaultBehaviorController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
+        $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -90,6 +97,9 @@ class CommentController extends DefaultBehaviorController
 
         return $this->render('update', [
             'model' => $model,
+            'users' => $users,
+            'tasks' => $tasks
+
         ]);
     }
 
