@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\PortfolioSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Portfolios';
+$this->title = 'Portfolio';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="portfolio-index">
@@ -24,13 +24,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
             'id',
-            'user_id',
+            [
+                'attribute' => 'user',
+                'value' => 'user.full_name',
+            ],
             'title',
             'description:ntext',
-            'url:url',
+            [
+                'attribute' => 'url',
+                'format' => 'html',
+                'value' => function(\app\models\Portfolio $model) {
+                    return Html::a(Html::encode($model->title), $model->url,
+                        ['target' => '_blank', 'title' => 'Нажмите, для перехода по ссылке']);
+                }
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

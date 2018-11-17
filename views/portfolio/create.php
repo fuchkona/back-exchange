@@ -5,9 +5,10 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Portfolio */
+/* @var $users app\models\User */
 
 $this->title = 'Create Portfolio';
-$this->params['breadcrumbs'][] = ['label' => 'Portfolios', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Portfolio', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="portfolio-create">
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'users' => $users
     ]) ?>
 
 </div>

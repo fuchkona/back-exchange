@@ -35,6 +35,7 @@ class PortfolioController extends DefaultBehaviorController
     {
         $searchModel = new PortfolioSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -63,6 +64,7 @@ class PortfolioController extends DefaultBehaviorController
     public function actionCreate()
     {
         $model = new Portfolio();
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -70,6 +72,7 @@ class PortfolioController extends DefaultBehaviorController
 
         return $this->render('create', [
             'model' => $model,
+            'users' => $users
         ]);
     }
 
@@ -83,6 +86,7 @@ class PortfolioController extends DefaultBehaviorController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -90,6 +94,7 @@ class PortfolioController extends DefaultBehaviorController
 
         return $this->render('update', [
             'model' => $model,
+            'users' => $users
         ]);
     }
 

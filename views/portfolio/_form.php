@@ -5,6 +5,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Portfolio */
+/* @var $users app\models\User */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -12,7 +13,16 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'user_id')->textInput() ?>
+    <?= $form->field($model, 'user_id')->widget(\yii\jui\AutoComplete::classname(), [
+        'clientOptions' => [
+	        'source' => $users,
+        ],
+        'options'=>[
+            'class'=>'form-control'
+        ]
+    ]) ?>
+
+
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 

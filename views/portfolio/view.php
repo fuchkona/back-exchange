@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Portfolio */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Portfolios', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Portfolio', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="portfolio-view">
@@ -29,10 +29,18 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'user_id',
+            [
+                'attribute' => 'user',
+                'value' => $model->user['full_name'],
+            ],
             'title',
             'description:ntext',
-            'url:url',
+            [
+                'attribute' => 'url',
+                'format' => 'html',
+                'value' => Html::a(Html::encode($model->title), $model->url,
+                    ['target' => '_blank', 'title' => 'Нажмите, для перехода по ссылке'])
+            ],
         ],
     ]) ?>
 
