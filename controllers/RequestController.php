@@ -35,6 +35,7 @@ class RequestController extends DefaultBehaviorController
     {
         $searchModel = new RequestSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -64,12 +65,17 @@ class RequestController extends DefaultBehaviorController
     {
         $model = new Request();
 
+        $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'tasks' => $tasks,
+            'users' => $users,
         ]);
     }
 
@@ -84,12 +90,18 @@ class RequestController extends DefaultBehaviorController
     {
         $model = $this->findModel($id);
 
+        $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
+
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'tasks' => $tasks,
+            'users' => $users,
         ]);
     }
 

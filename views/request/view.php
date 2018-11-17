@@ -29,8 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'task_id',
-            'requester_id',
+            [
+                'attribute' => 'task',
+                'value' => $model->task['title'],
+            ],
+            [
+                'attribute' => 'requester',
+                'value' => $model->requester['full_name'],
+            ],
             'need_time:datetime',
         ],
     ]) ?>

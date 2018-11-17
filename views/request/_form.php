@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Request */
+/* @var $tasks \app\models\Task[]|array */
+/* @var $users app\models\User[]|array */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -12,9 +14,23 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'task_id')->textInput() ?>
+    <?= $form->field($model, 'task_id')->widget(\yii\jui\AutoComplete::classname(), [
+        'clientOptions' => [
+            'source' => $tasks,
+        ],
+        'options'=>[
+            'class'=>'form-control'
+        ]
+    ]) ?>
 
-    <?= $form->field($model, 'requester_id')->textInput() ?>
+    <?= $form->field($model, 'requester_id')->widget(\yii\jui\AutoComplete::classname(), [
+        'clientOptions' => [
+            'source' => $users,
+        ],
+        'options'=>[
+            'class'=>'form-control'
+        ]
+    ]) ?>
 
     <?= $form->field($model, 'need_time')->textInput() ?>
 

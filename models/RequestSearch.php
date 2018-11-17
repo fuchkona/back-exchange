@@ -12,6 +12,9 @@ use app\models\Request;
  */
 class RequestSearch extends Request
 {
+    public $requester;
+    public $task;
+
     /**
      * {@inheritdoc}
      */
@@ -19,6 +22,7 @@ class RequestSearch extends Request
     {
         return [
             [['id', 'task_id', 'requester_id', 'need_time'], 'integer'],
+            [['text', 'requester', 'task'], 'safe'],
         ];
     }
 
@@ -41,6 +45,7 @@ class RequestSearch extends Request
     public function search($params)
     {
         $query = Request::find();
+        $query->joinWith(['requester', 'task']);
 
         // add conditions that should always apply here
 
@@ -48,9 +53,17 @@ class RequestSearch extends Request
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $dataProvider->sort->attributes['requester'] = [
+            'asc' => ['user.full_name' => SORT_ASC],
+            'desc' => ['user.full_name' => SORT_DESC],
+        ];
 
-        if (!$this->validate()) {
+        $dataProvider->sort->attributes['task'] = [
+            'asc' => ['tasks.title' => SORT_ASC],
+            'desc' => ['tasks.title' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
@@ -63,6 +76,9 @@ class RequestSearch extends Request
             'requester_id' => $this->requester_id,
             'need_time' => $this->need_time,
         ]);
+
+        $query->andFilterWhere(['like', 'user.full_name', $this->requester])
+            ->andFilterWhere(['like', 'tasks.title', $this->task]);
 
         return $dataProvider;
     }
