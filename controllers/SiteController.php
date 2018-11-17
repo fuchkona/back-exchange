@@ -21,7 +21,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error', 'signup'],
+                        'actions' => ['login', 'error', 'signup', 'api'],
                         'allow' => true,
                     ],
                     [
@@ -154,5 +154,13 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * @return string
+     */
+    public function actionApi()
+    {
+        return $this->render('api');
     }
 }

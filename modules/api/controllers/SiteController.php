@@ -14,16 +14,6 @@ use yii\web\Response;
  */
 class SiteController extends Controller
 {
-    /**
-     * Renders the index view for the module
-     * @return string
-     */
-    public function actionIndex()
-    {
-
-        \Yii::$app->response->format = Response::FORMAT_HTML;
-        return $this->render('index');
-    }
 
     /**
      * @return \app\models\User|LoginForm|null
