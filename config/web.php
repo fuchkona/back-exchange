@@ -55,6 +55,9 @@ $config = [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => ['api/task', 'api/site']
                 ],
+                '<controller:(user|task|comment|file|request)>s' => '<controller>/index',
+                '<controller:[\w-]+>/<id:\d+>'      => '<controller>/view',
+
             ],
         ],
     ],
