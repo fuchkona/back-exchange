@@ -13,18 +13,19 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
+
     public function behaviors()
     {
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout'],
                 'rules' => [
                     [
-                        'actions' => ['logout'],
+                        'actions' => ['login', 'error', 'signup', 'api'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['logout', 'index', 'about', 'contact'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -72,8 +73,10 @@ class SiteController extends Controller
      */
     public function actionSignup()
     {
+
         $model = new SignupForm();
 
+        $this->layout = false;
         if ($model->load(Yii::$app->request->post())) {
             if ($user = $model->signup()) {
                 if (Yii::$app->getUser()->login($user)) {
@@ -96,6 +99,10 @@ class SiteController extends Controller
     {
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
+        }
+        else{
+            $this->layout = false;
+
         }
 
         $model = new LoginForm();
@@ -147,5 +154,13 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * @return string
+     */
+    public function actionApi()
+    {
+        return $this->render('api');
     }
 }

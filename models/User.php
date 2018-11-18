@@ -17,16 +17,67 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $email
+ * @property integer $time
  * @property string $auth_key
  * @property integer $status
+ * @property integer $role
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * @property Task[] $createdTasks
+ * @property Task[] $tasksPerformed
+ * @property Portfolio[] $portfolio
+ * @property File[] $files
+ * @property Comment[] $comments
+ * @property Request[] $requests
+
  */
 class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+    const STATUS_LIST = [
+        self::STATUS_DELETED => 'удален',
+        self::STATUS_ACTIVE => 'активен'
+    ];
+
+    const SCENARIO_ADMIN_CREATE = 'admin_create';
+    const SCENARIO_ADMIN_UPDATE = 'admin_update';
+
+
+    const RELATION_CREATED_TASKS = 'createdTasks';
+    const RELATION_TASKS_PERFORMED = 'tasksPerformed';
+    const RELATION_PORTFOLIO = 'portfolio';
+    const RELATION_FILES = 'files';
+    const RELATION_COMMENTS = 'comments';
+    const RELATION_REQUESTS = 'requests';
+
+
+    const ROLE_USER = 0;
+    const ROLE_MODERATOR = 123;
+    const ROLE_ADMIN = 255;
+
+    const ROLE_LIST = [
+        self::ROLE_ADMIN => 'Admin',
+        self::ROLE_MODERATOR => 'Moderator',
+        self::ROLE_USER => 'User'
+    ];
+
+    private $password;
+
+    /**
+     * @return array
+     */
+    public function fields()
+    {
+        return [
+            'username',
+            'full_name',
+            'email',
+            'token' => 'auth_key',
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -52,9 +103,55 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
+            [['username', 'full_name', 'password_hash', 'password_reset_token', 'auth_key'], 'string'],
+            [['time', 'status', 'role'], 'integer'],
+            [['email'], 'email'],
+            [['password'], 'string', 'min' => 6],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [['username', 'full_name', 'email'], 'required',
+                'on' => [self::SCENARIO_ADMIN_CREATE, self::SCENARIO_ADMIN_UPDATE]],
+            [['username', 'email'], 'unique',
+                'on' => [self::SCENARIO_ADMIN_CREATE, self::SCENARIO_ADMIN_UPDATE]],
+            [['password'], 'required', 'on' => self::SCENARIO_ADMIN_CREATE],
+
         ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Username',
+            'full_name' => 'Full name',
+            'auth_key' => 'Auth key',
+            'password_hash' => 'Password hash',
+            'password_reset_token' => 'Password reset token',
+            'email' => 'Email',
+            'time' => 'Time',
+            'status' => 'Status',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
+        ];
+    }
+
+    /**
+     * @param bool $insert
+     * @return bool
+     */
+    public function beforeSave($insert)
+    {
+        if (!parent::beforeSave($insert)) {
+            return false;
+        }
+
+        if($insert) {
+            $this->generateAuthKey();
+        }
+        return true;
     }
 
     /**
@@ -137,7 +234,18 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        if ($password) {
+            $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        }
+        $this->password = $password;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPassword()
+    {
+        return $this->password;
     }
 
     /**
@@ -147,5 +255,63 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->auth_key = Yii::$app->security->generateRandomString();
     }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreatedTasks()
+    {
+        return $this->hasMany(Task::className(), ['owner_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTasksPerformed()
+    {
+        return $this->hasMany(Task::className(), ['worker_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPortfolio()
+    {
+        return $this->hasMany(Portfolio::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getFiles()
+    {
+        return $this->hasMany(File::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getComments()
+    {
+        return $this->hasMany(Comment::className(), ['author_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getRequests()
+    {
+        return $this->hasMany(Request::className(), ['requester_id' => 'id']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return \app\models\query\UserQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new \app\models\query\UserQuery(get_called_class());
+    }
+
 
 }

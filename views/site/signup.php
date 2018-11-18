@@ -8,15 +8,31 @@
 
 /* @var $model \app\models\SignupForm */
 
+use app\assets\AppAsset;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
 $this->title = 'Signup';
 $this->params['breadcrumbs'][] = $this->title;
+AppAsset::register($this);
 ?>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode('Time exchange') ?></title>
+    <?php $this->head() ?>
+</head>
+<body style="background-color: #25728c; height: 0">
+<?php $this->beginBody() ?>
+<div class="login__container">
 <div class="site-signup">
-    <h1><?= Html::encode($this->title) ?></h1>
-    <p>Please fill out the following fields to signup:</p>
+    <h1><?= Html::encode('Time exchange регистрация') ?></h1>
+    <p>Пожалуйста введите следующие поля чтобы зарегистрироваться</p>
     <div class="row">
         <div class="col-lg-5">
 
@@ -26,10 +42,16 @@ $this->params['breadcrumbs'][] = $this->title;
             <?= $form->field($model, 'email') ?>
             <?= $form->field($model, 'password')->passwordInput() ?>
             <div class="form-group">
-                <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                <?= Html::submitButton('Зарегистрироваться', ['class' => 'btn btn-success', 'name' => 'signup-button']) ?>
+                <?= Html::a('Уже есть учетка?', '/site/login', ['class' => 'btn btn-primary']) ?>
             </div>
             <?php ActiveForm::end(); ?>
 
         </div>
     </div>
 </div>
+</div>
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>

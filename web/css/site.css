@@ -113,3 +113,21 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.login__container{
+    width: 75%;
+    margin: 250px auto;
+    color: #fff;
+}
+
+.login_header{
+    text-align: center;
+}
+
+.help-block.help-block-error, .has-error .control-label {
+    color: #ff8c00 !important;
+}
+
+.has-success .control-label{
+    color: lightgreen !important;
+}
