@@ -4,9 +4,10 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Portfolio */
+/* @var $users app\models\User */
 
 $this->title = 'Update Portfolio: ' . $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Portfolios', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Portfolio', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'users' => $users
     ]) ?>
 
 </div>

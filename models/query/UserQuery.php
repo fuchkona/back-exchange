@@ -15,6 +15,18 @@ class UserQuery extends \yii\db\ActiveQuery
     }*/
 
     /**
+     * @param array $fields Array of fields to select
+     * Example for yii-jui: User::find()->selectFields([['id as value', 'full_name as label']]);
+     *
+     * @return \app\models\User[]|array
+     */
+    public function selectFields(array $fields)
+    {
+        return $this->select($fields)->asArray()->all();
+    }
+
+
+    /**
      * {@inheritdoc}
      * @return \app\models\User[]|array
      */

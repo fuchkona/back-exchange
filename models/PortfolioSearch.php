@@ -12,6 +12,8 @@ use app\models\Portfolio;
  */
 class PortfolioSearch extends Portfolio
 {
+
+    public $user;
     /**
      * {@inheritdoc}
      */
@@ -19,7 +21,7 @@ class PortfolioSearch extends Portfolio
     {
         return [
             [['id', 'user_id'], 'integer'],
-            [['title', 'description', 'url'], 'safe'],
+            [['title', 'description', 'url', 'user'], 'safe'],
         ];
     }
 
@@ -42,6 +44,7 @@ class PortfolioSearch extends Portfolio
     public function search($params)
     {
         $query = Portfolio::find();
+        $query->joinWith(['user']);
 
         // add conditions that should always apply here
 
@@ -49,13 +52,17 @@ class PortfolioSearch extends Portfolio
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $dataProvider->sort->attributes['user'] = [
+            'asc' => ['user.full_name' => SORT_ASC],
+            'desc' => ['user.full_name' => SORT_DESC],
+        ];
 
-        if (!$this->validate()) {
+        if (!($this->load($params) && $this->validate())) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
         }
+
 
         // grid filtering conditions
         $query->andFilterWhere([
@@ -65,7 +72,8 @@ class PortfolioSearch extends Portfolio
 
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'description', $this->description])
-            ->andFilterWhere(['like', 'url', $this->url]);
+            ->andFilterWhere(['like', 'url', $this->url])
+            ->andFilterWhere(['like', 'user.full_name', $this->user]);
 
         return $dataProvider;
     }

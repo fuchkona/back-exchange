@@ -12,6 +12,9 @@ use app\models\Comment;
  */
 class CommentSearch extends Comment
 {
+    public $author;
+    public $task;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +22,7 @@ class CommentSearch extends Comment
     {
         return [
             [['id', 'task_id', 'author_id', 'created_at', 'updated_at'], 'integer'],
-            [['text'], 'safe'],
+            [['text', 'author', 'task'], 'safe'],
         ];
     }
 
@@ -42,6 +45,7 @@ class CommentSearch extends Comment
     public function search($params)
     {
         $query = Comment::find();
+        $query->joinWith(['author', 'task']);
 
         // add conditions that should always apply here
 
@@ -49,9 +53,17 @@ class CommentSearch extends Comment
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $dataProvider->sort->attributes['author'] = [
+            'asc' => ['user.full_name' => SORT_ASC],
+            'desc' => ['user.full_name' => SORT_DESC],
+        ];
 
-        if (!$this->validate()) {
+        $dataProvider->sort->attributes['task'] = [
+            'asc' => ['tasks.title' => SORT_ASC],
+            'desc' => ['tasks.title' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
@@ -66,7 +78,9 @@ class CommentSearch extends Comment
             'updated_at' => $this->updated_at,
         ]);
 
-        $query->andFilterWhere(['like', 'text', $this->text]);
+        $query->andFilterWhere(['like', 'text', $this->text])
+            ->andFilterWhere(['like', 'user.full_name', $this->author])
+            ->andFilterWhere(['like', 'tasks.title', $this->task]);
 
         return $dataProvider;
     }

@@ -29,8 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'task_id',
-            'author_id',
+            [
+                'attribute' => 'task',
+                'value' => $model->task['title'],
+            ],
+            [
+                'attribute' => 'author',
+                'value' => $model->author['full_name'],
+            ],
             'text:ntext',
             'created_at:datetime',
             'updated_at:datetime',
