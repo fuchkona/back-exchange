@@ -23,10 +23,10 @@
                                 <code style="white-space: pre-line">
                                     "success": true,
                                     "data: {
-                                        "username": "username",
-                                        "full_name": "display name",
-                                        "email": "email@email.ru",
-                                        "token": "some_token"
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email@email.ru",
+                                    "token": "some_token"
                                     }
                                 </code>
                             </p>
@@ -34,14 +34,14 @@
                                 <code style="white-space: pre-line">
                                     "success": false,
                                     "data: [
-                                        {
-                                        "field": "username",
-                                        "message": "Username cannot be blank."
-                                        },
-                                        {
-                                        "field": "password",
-                                        "message": "Password cannot be blank."
-                                        }
+                                    {
+                                    "field": "username",
+                                    "message": "Username cannot be blank."
+                                    },
+                                    {
+                                    "field": "password",
+                                    "message": "Password cannot be blank."
+                                    }
                                     ]</code>
                             </p>
                         </div>
@@ -74,6 +74,40 @@
                     </div>
                 </li>
                 <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#logout">
+                        <b>Logout</b> - reset token
+                    </button>
+                    <div id="logout" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/site/logout</p>
+                            <p><b>Method:</b> get</p>
+                            <p><b>Auth:</b> OAuth 2.0, Bearer Token</p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "success": true,
+                                    "data": true
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "success": false,
+                                    "data": {
+                                    "name": "Unauthorized",
+                                    "message": "Your request was made with invalid credentials.",
+                                    "code": 0,
+                                    "status": 401,
+                                    "type": "yii\\web\\UnauthorizedHttpException"
+                                    }
+                                    }
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
                     <button class="btn btn-link" data-toggle="collapse" data-target="#signup">
                         <b>Signup</b> - registration new user and getting token
                     </button>
@@ -86,10 +120,10 @@
                                 <code style="white-space: pre-line">
                                     "success": true,
                                     "data: {
-                                        "username": "username",
-                                        "full_name": "display name",
-                                        "email": "email@email.ru",
-                                        "token": "some_token"
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email@email.ru",
+                                    "token": "some_token"
                                     }
                                 </code>
                             </p>
@@ -97,22 +131,22 @@
                                 <code style="white-space: pre-line">
                                     "success": false,
                                     "data: [
-                                        {
-                                        "field": "username",
-                                        "message": "Username cannot be blank."
-                                        },
-                                        {
-                                        "field": "full_name",
-                                        "message": "Full Name cannot be blank."
-                                        },
-                                        {
-                                        "field": "email",
-                                        "message": "Email cannot be blank."
-                                        },
-                                        {
-                                        "field": "password",
-                                        "message": "Password cannot be blank."
-                                        }
+                                    {
+                                    "field": "username",
+                                    "message": "Username cannot be blank."
+                                    },
+                                    {
+                                    "field": "full_name",
+                                    "message": "Full Name cannot be blank."
+                                    },
+                                    {
+                                    "field": "email",
+                                    "message": "Email cannot be blank."
+                                    },
+                                    {
+                                    "field": "password",
+                                    "message": "Password cannot be blank."
+                                    }
                                     ]
                                 </code>
                             </p>
@@ -144,28 +178,28 @@
                                     "success": true,
                                     "data: [
                                     {
-                                        "id": task_id,
-                                        "title": "title task",
-                                        "description": "description task",
-                                        "contract_time": contract time,
-                                        "deadline": deadline,
-                                        "created_at": created at,
-                                        "updated_at": updated at,
-                                        "owner": {
-                                        "id": 1,
-                                        "username": "username",
-                                        "full_name": "display name",
-                                        "email": "email",
-                                        },
-                                        "worker": {
-                                        "id": user_id,
-                                        "username": "username",
-                                        "full_name": "display name",
-                                        "email": "email",
-                                        }
-                                        },
-                                        {(another task)},
-                                        {(another task)}
+                                    "id": task_id,
+                                    "title": "title task",
+                                    "description": "description task",
+                                    "contract_time": contract time,
+                                    "deadline": deadline,
+                                    "created_at": created at,
+                                    "updated_at": updated at,
+                                    "owner": {
+                                    "id": 1,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    },
+                                    "worker": {
+                                    "id": user_id,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    }
+                                    },
+                                    {(another task)},
+                                    {(another task)}
                                     ]
 
                                     owners and worker extra_field:
@@ -181,17 +215,17 @@
                                 <code style="white-space: pre-line">
                                     "success": false,
                                     "data: {
-                                        "name": "Not Found",
-                                        "message": "Page not found.",
-                                        "code": 0,
-                                        "status": 404,
-                                        "type": "yii\\web\\NotFoundHttpException",
-                                        "previous": {
-                                        "name": "Invalid Route",
-                                        "message": "Unable to resolve the request \"api/tasksf\".",
-                                        "code": 0,
-                                        "type": "yii\\base\\InvalidRouteException"
-                                        }
+                                    "name": "Not Found",
+                                    "message": "Page not found.",
+                                    "code": 0,
+                                    "status": 404,
+                                    "type": "yii\\web\\NotFoundHttpException",
+                                    "previous": {
+                                    "name": "Invalid Route",
+                                    "message": "Unable to resolve the request \"api/tasksf\".",
+                                    "code": 0,
+                                    "type": "yii\\base\\InvalidRouteException"
+                                    }
                                     }
                                 </code>
                             </p>
@@ -211,33 +245,33 @@
                                 <code style="white-space: pre-line">
                                     "success": true,
                                     "data: {
-                                        "id": task_id,
-                                        "title": "title task",
-                                        "description": "description task",
-                                        "contract_time": contract time,
-                                        "deadline": deadline,
-                                        "created_at": created at,
-                                        "updated_at": updated at,
-                                        "owner": {
-                                        "id": 1,
-                                        "username": "username",
-                                        "full_name": "display name",
-                                        "email": "email",
-                                        },
-                                        "worker": {
-                                        "id": user_id,
-                                        "username": "username",
-                                        "full_name": "display name",
-                                        "email": "email",
-                                        }
+                                    "id": task_id,
+                                    "title": "title task",
+                                    "description": "description task",
+                                    "contract_time": contract time,
+                                    "deadline": deadline,
+                                    "created_at": created at,
+                                    "updated_at": updated at,
+                                    "owner": {
+                                    "id": 1,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    },
+                                    "worker": {
+                                    "id": user_id,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    }
                                     }
 
                                     owners and worker extra_field:
                                     {
-                                        "time": time,
-                                        "status": status,
-                                        "created_at": created at,
-                                        "update_at": updated at
+                                    "time": time,
+                                    "status": status,
+                                    "created_at": created at,
+                                    "update_at": updated at
                                     }
                                 </code>
                             </p>
@@ -245,11 +279,11 @@
                                 <code style="white-space: pre-line">
                                     "success": false,
                                     "data: {
-                                        "name": "Not Found",
-                                        "message": "Object not found: 55",
-                                        "code": 0,
-                                        "status": 404,
-                                        "type": "yii\\web\\NotFoundHttpException"
+                                    "name": "Not Found",
+                                    "message": "Object not found: 55",
+                                    "code": 0,
+                                    "status": 404,
+                                    "type": "yii\\web\\NotFoundHttpException"
                                     }
                                 </code>
                             </p>
@@ -269,28 +303,28 @@
                                 <code style="white-space: pre-line">
                                     "success": true,
                                     "data: {
-                                        "id": task_id,
-                                        "title": "title task",
-                                        "description": "description task",
-                                        "contract_time": contract time,
-                                        "deadline": deadline,
-                                        "created_at": created at,
-                                        "updated_at": updated at,
-                                        "owner": {
-                                        "id": user_id,
-                                        "username": "username",
-                                        "full_name": "display name",
-                                        "email": "email",
-                                        },
-                                        "worker": null
+                                    "id": task_id,
+                                    "title": "title task",
+                                    "description": "description task",
+                                    "contract_time": contract time,
+                                    "deadline": deadline,
+                                    "created_at": created at,
+                                    "updated_at": updated at,
+                                    "owner": {
+                                    "id": user_id,
+                                    "username": "username",
+                                    "full_name": "display name",
+                                    "email": "email",
+                                    },
+                                    "worker": null
                                     }
 
                                     owners and worker extra_field:
                                     {
-                                        "time": time,
-                                        "status": status,
-                                        "created_at": created at,
-                                        "update_at": updated at
+                                    "time": time,
+                                    "status": status,
+                                    "created_at": created at,
+                                    "update_at": updated at
                                     }
                                 </code>
                             </p>
@@ -298,10 +332,10 @@
                                 <code style="white-space: pre-line">
                                     "success": false,
                                     "data: [
-                                        {"field":"title","message":"Title cannot be blank."},
-                                        {"field":"description","message":"Description cannot be blank."},
-                                        {"field":"owner_id","message":"Owner ID cannot be blank."},
-                                        {"field":"deadline","message":"Deadline cannot be blank."}
+                                    {"field":"title","message":"Title cannot be blank."},
+                                    {"field":"description","message":"Description cannot be blank."},
+                                    {"field":"owner_id","message":"Owner ID cannot be blank."},
+                                    {"field":"deadline","message":"Deadline cannot be blank."}
                                     ]
                                 </code>
                             </p>
@@ -327,11 +361,11 @@
                                 <code style="white-space: pre-line">
                                     "success": false,
                                     "data: {
-                                        "name":"Not Found",
-                                        "message":"Task is not found",
-                                        "code":0,
-                                        "status":404,
-                                        "type":"yii\\web\\NotFoundHttpException"
+                                    "name":"Not Found",
+                                    "message":"Task is not found",
+                                    "code":0,
+                                    "status":404,
+                                    "type":"yii\\web\\NotFoundHttpException"
                                     }
                                 </code>
                             </p>
