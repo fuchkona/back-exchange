@@ -31,9 +31,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'owner_id',
-            'worker_id',
-            'contract_time:datetime',
+            [
+                'attribute' => 'owner',
+                'format' => 'raw',
+                'value' => Html::a($model->owner['full_name'], ['user/view', 'id' => $model->owner_id], ['target' => '_blank']),
+            ],
+            [
+                'attribute' => 'worker',
+                'format' => 'raw',
+                'value' => Html::a($model->worker['full_name'], ['user/view', 'id' => $model->worker_id], ['target' => '_blank']),
+            ],
+            [
+                'attribute' => 'contract_time',
+                'value' => floor($model->contract_time / 60) . ' ч. ' . $model->contract_time % 60 . ' мин.'
+            ],
             'deadline:datetime',
             'created_at:datetime',
             'updated_at:datetime',

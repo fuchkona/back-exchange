@@ -70,8 +70,11 @@ class TaskController extends DefaultBehaviorController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
+
         return $this->render('create', [
             'model' => $model,
+            'users' => $users,
         ]);
     }
 
@@ -90,8 +93,11 @@ class TaskController extends DefaultBehaviorController
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
+
         return $this->render('update', [
             'model' => $model,
+            'users' => $users,
         ]);
     }
 

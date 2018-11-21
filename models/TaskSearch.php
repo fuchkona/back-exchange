@@ -12,6 +12,9 @@ use app\models\Task;
  */
 class TaskSearch extends Task
 {
+    public $owner;
+    public $worker;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +22,7 @@ class TaskSearch extends Task
     {
         return [
             [['id', 'owner_id', 'worker_id', 'contract_time', 'deadline', 'created_at', 'updated_at'], 'integer'],
-            [['title', 'description'], 'safe'],
+            [['title', 'description', 'owner', 'worker'], 'safe'],
         ];
     }
 
@@ -43,11 +46,23 @@ class TaskSearch extends Task
     {
         $query = Task::find();
 
+        $query->joinWith([Task::RELATION_OWNER, Task::RELATION_WORKER]);
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
+
+        $dataProvider->sort->attributes['owner'] = [
+            'asc' => ['owner.full_name' => SORT_ASC],
+            'desc' => ['owner.full_name' => SORT_DESC],
+        ];
+
+        $dataProvider->sort->attributes['worker'] = [
+            'asc' => ['worker.full_name' => SORT_ASC],
+            'desc' => ['worker.full_name' => SORT_DESC],
+        ];
 
         $this->load($params);
 
@@ -69,7 +84,9 @@ class TaskSearch extends Task
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'owner.full_name', $this->owner])
+            ->andFilterWhere(['like', 'worker.full_name', $this->worker]);
 
         return $dataProvider;
     }

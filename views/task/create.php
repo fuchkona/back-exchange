@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
+/* @var $users app\models\User[]|array */
 /* @var $model app\models\Task */
 
 $this->title = 'Create Task';
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'users' => $users,
     ]) ?>
 
 </div>

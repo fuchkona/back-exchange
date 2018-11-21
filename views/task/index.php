@@ -29,8 +29,20 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'description:ntext',
-            'owner_id',
-            'worker_id',
+            [
+                'attribute' => 'owner',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::a($model->owner['full_name'], ['user/view', 'id' => $model->owner_id], ['target' => '_blank']);
+                },
+            ],
+            [
+                'attribute' => 'worker',
+                'format' => 'raw',
+                'value' => function($model) {
+                    return Html::a($model->worker['full_name'], ['user/view', 'id' => $model->worker_id], ['target' => '_blank']);
+                },
+            ],
             //'contract_time:datetime',
             'deadline:datetime',
             //'created_at',

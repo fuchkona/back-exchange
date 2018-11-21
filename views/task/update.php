@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
+/* @var $users app\models\User[]|array */
 /* @var $model app\models\Task */
 
 $this->title = 'Update Task: ' . $model->title;
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'users' => $users,
     ]) ?>
 
 </div>

@@ -62,7 +62,9 @@ class Task extends \yii\db\ActiveRecord
         return [
             [['title', 'description', 'owner_id', 'deadline'], 'required'],
             [['description'], 'string'],
-            [['owner_id', 'worker_id', 'contract_time', 'deadline'], 'integer'],
+            [['owner_id', 'worker_id', 'contract_time'], 'integer'],
+            ['deadline', 'default', 'value' => null],
+            ['deadline', 'date', 'timestampAttribute' => 'deadline'],
             [['title'], 'string', 'max' => 300],
             [['owner_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['owner_id' => 'id']],
             [['worker_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['worker_id' => 'id']],
@@ -124,7 +126,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getOwner()
     {
-        return $this->hasOne(User::className(), ['id' => 'owner_id']);
+        return $this->hasOne(User::className(), ['id' => 'owner_id'])->from(['owner' => User::tableName()]);
     }
 
     /**
@@ -132,7 +134,7 @@ class Task extends \yii\db\ActiveRecord
      */
     public function getWorker()
     {
-        return $this->hasOne(User::className(), ['id' => 'worker_id']);
+        return $this->hasOne(User::className(), ['id' => 'worker_id'])->from(['worker' => User::tableName()]);
     }
 
     /**
