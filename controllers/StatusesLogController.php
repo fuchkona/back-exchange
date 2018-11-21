@@ -38,6 +38,7 @@ class StatusesLogController extends DefaultBehaviorController
     {
         $searchModel = new StatusesLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = 10;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -66,6 +67,8 @@ class StatusesLogController extends DefaultBehaviorController
     public function actionCreate()
     {
         $model = new StatusesLog();
+        $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
+        $statuses = \app\models\Statuses::find()->select('title')->column();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -73,6 +76,8 @@ class StatusesLogController extends DefaultBehaviorController
 
         return $this->render('create', [
             'model' => $model,
+            'tasks' => $tasks,
+            'statuses' => $statuses,
         ]);
     }
 
@@ -86,6 +91,8 @@ class StatusesLogController extends DefaultBehaviorController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
+        $statuses = \app\models\Statuses::find()->select('title')->column();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -93,6 +100,8 @@ class StatusesLogController extends DefaultBehaviorController
 
         return $this->render('update', [
             'model' => $model,
+            'tasks' => $tasks,
+            'statuses' => $statuses,
         ]);
     }
 

@@ -5,6 +5,8 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\StatusesLog */
+/* @var $tasks app\models\Task[]|array */
+/* @var $statuses app\models\Statuses[]|array */
 
 $this->title = 'Create Statuses Log';
 $this->params['breadcrumbs'][] = ['label' => 'Statuses Logs', 'url' => ['index']];
@@ -16,6 +18,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'tasks' => $tasks,
+        'statuses' => $statuses,
     ]) ?>
 
 </div>
