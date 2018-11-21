@@ -27,10 +27,27 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
-            'task_id',
-            'user_id',
-            'filename',
-            'display_name',
+            [
+                'attribute' => 'task',
+                'format' => 'raw',
+                'value' => function(\app\models\File $model) {
+                    return Html::a($model->task['title'], ['task/view', 'id' => $model->task_id], ['target' => '_blank']);
+                },
+            ],
+            [
+                'attribute' => 'user',
+                'format' => 'raw',
+                'value' => function(\app\models\File $model) {
+                    return Html::a($model->user['full_name'], ['user/view', 'id' => $model->user_id], ['target' => '_blank']);
+                },
+            ],
+            [
+                'attribute' => 'display_name',
+                'format' => 'raw',
+                'value' => function(\app\models\File $model) {
+                    return Html::a($model->display_name, ['file/load-file', 'id' => $model->id], ['target' => '_blank']);
+                },
+            ],
             //'description:ntext',
 
             ['class' => 'yii\grid\ActionColumn'],
