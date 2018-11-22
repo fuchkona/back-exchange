@@ -10,7 +10,7 @@ namespace app\modules\api\controllers;
 
 
 
-use app\models\Comment;
+use app\modules\api\models\Comment;
 use app\services\CommentService;
 use Yii;
 use yii\data\ActiveDataProvider;
