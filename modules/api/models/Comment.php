@@ -17,7 +17,7 @@ class Comment extends \app\models\Comment
         return [
             'id',
             'author' => function(){
-                return \app\models\User::findOne($this->author_id);
+                return User::findOne($this->author_id);
             },
             'text',
             'created_at',

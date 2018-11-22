@@ -37,19 +37,21 @@ class CommentController extends ActiveController
                         'matchCallback' => function ($rules, $action) {
                             $currentUser = Yii::$app->user->identity;
                             $comment = Comment::findOne(['id' => Yii::$app->request->get('comment_id')]);
+
                             if (isset($comment)){
                                 return CommentService::canDelete($currentUser, $comment);
                             }
                         },
-                        'denyCallback' => function () {
-                            throw new ForbiddenHttpException('You a not have permissions for delete this comment');
-                        }
                     ],
                     [
                         'allow' => true,
                         'roles' => ['@'],
+                        'actions' => ['index', 'create', 'update']
                     ],
                 ],
+                'denyCallback' => function () {
+                    throw new ForbiddenHttpException('You a not have permissions for this action');
+                }
             ],
         ];
     }

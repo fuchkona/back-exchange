@@ -11,6 +11,7 @@ namespace app\services;
 
 
 use app\models\Comment;
+use Yii;
 use yii\web\IdentityInterface;
 
 class CommentService
