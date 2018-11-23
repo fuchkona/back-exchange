@@ -63,6 +63,7 @@ class FileController extends DefaultBehaviorController
     public function actionCreate()
     {
         $model = new File();
+        $model->setScenario(File::SCENARIO_FILE_CREATE);
         $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
         $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
 
@@ -92,16 +93,24 @@ class FileController extends DefaultBehaviorController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario(File::SCENARIO_FILE_UPDATE);
         $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
         $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
 
         if ($model->load(Yii::$app->request->post())) {
+
             $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
-            if ($model->upload()) {
-                if ($model->save(false)) {
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+
+            if ($model->file !== null) {
+                $model->deleteFile();
             }
+
+            $model->upload();
+
+            if ($model->save(false)) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
 
         return $this->render('update', [
@@ -112,15 +121,17 @@ class FileController extends DefaultBehaviorController
     }
 
     /**
-     * Deletes an existing File model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->deleteFile();
+        $model->delete();
 
         return $this->redirect(['index']);
     }

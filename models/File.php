@@ -24,6 +24,9 @@ class File extends \yii\db\ActiveRecord
 {
     public $file;
 
+    const SCENARIO_FILE_CREATE = 'file_create';
+    const SCENARIO_FILE_UPDATE = 'file_update';
+
     const RELATION_TASK = 'task';
     const RELATION_USER = 'user';
 
@@ -41,7 +44,6 @@ class File extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['task_id', 'user_id', 'filename'], 'required'],
             [['task_id', 'user_id'], 'integer'],
             [['description'], 'string'],
             [['filename', 'display_name'], 'string', 'max' => 300],
@@ -49,6 +51,10 @@ class File extends \yii\db\ActiveRecord
                 'tooBig' => 'Максимальный размер файла 2 Мб.',
                 'wrongExtension' => 'Файл, должен иметь формат: .pdf, .doc, .docx, .xls, .xlsx, .xlsm, .jpg, .png'
             ],
+            [['task_id', 'user_id', 'filename'], 'required',
+                'on' => [self::SCENARIO_FILE_CREATE, self::SCENARIO_FILE_UPDATE]],
+            [['file'], 'required',
+                'on' => [self::SCENARIO_FILE_CREATE]],
             [['task_id'], 'exist', 'skipOnError' => true, 'targetClass' => Task::className(), 'targetAttribute' => ['task_id' => 'id']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
@@ -86,8 +92,6 @@ class File extends \yii\db\ActiveRecord
 
             if ($this->validate()) {
 
-
-
                 $filePath = Yii::$app->basePath . '/web/files/';
                 if (!file_exists($filePath)) {
                     mkdir($filePath);
@@ -106,6 +110,20 @@ class File extends \yii\db\ActiveRecord
             }
         }
 
+    }
+
+    /**
+     * @return bool
+     */
+    public  function  deleteFile()
+    {
+        $filePath = Yii::$app->basePath . '/web/files/' . $this->user_id  . '/' . $this->filename;
+        if (file_exists($filePath)) {
+            unlink($filePath);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
