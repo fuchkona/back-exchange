@@ -67,6 +67,13 @@ class CommentController extends ActiveController
         return $actions;
     }
 
+    protected function verbs()
+    {
+        $verbs = parent::verbs();
+        $verbs['by-task'] = ['GET', 'HEAD'];
+        return $verbs;
+    }
+
     public function actionByTask($task_id)
     {
         $query = Comment::find()->byTask($task_id);

@@ -60,7 +60,7 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['api/task', 'api/site', 'api/comment']
+                    'controller' => ['api/task', 'api/site', 'api/comment', 'api/request']
                 ],
                 'api' => 'site/api'
             ],
