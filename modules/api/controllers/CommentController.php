@@ -46,7 +46,7 @@ class CommentController extends ActiveController
                     [
                         'allow' => true,
                         'roles' => ['@'],
-                        'actions' => ['index', 'create', 'update']
+                        'actions' => ['by-task', 'create', 'update']
                     ],
                 ],
                 'denyCallback' => function () {
@@ -60,12 +60,11 @@ class CommentController extends ActiveController
     {
         $actions = parent::actions();
         unset($actions['delete']);
-        unset($actions['index']);
 
         return $actions;
     }
 
-    public function actionIndex($task_id)
+    public function actionByTask($task_id)
     {
         $query = Comment::find()->byTask($task_id);
 
