@@ -41,6 +41,9 @@ class CommentController extends ActiveController
                             if (isset($comment)){
                                 return CommentService::canDelete($currentUser, $comment);
                             }
+                            else{
+                                throw new NotFoundHttpException('Comment is not found');
+                            }
                         },
                     ],
                     [
