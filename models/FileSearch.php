@@ -12,6 +12,9 @@ use app\models\File;
  */
 class FileSearch extends File
 {
+    public  $task;
+    public $user;
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +22,7 @@ class FileSearch extends File
     {
         return [
             [['id', 'task_id', 'user_id'], 'integer'],
-            [['filename', 'display_name', 'description'], 'safe'],
+            [['filename', 'display_name', 'description', 'task', 'user'], 'safe'],
         ];
     }
 
@@ -42,6 +45,7 @@ class FileSearch extends File
     public function search($params)
     {
         $query = File::find();
+        $query->joinWith([File::RELATION_TASK, File::RELATION_USER]);
 
         // add conditions that should always apply here
 
@@ -49,9 +53,16 @@ class FileSearch extends File
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $dataProvider->sort->attributes['task'] = [
+            'asc' => ['task.title' => SORT_ASC],
+            'desc' => ['task.title' => SORT_DESC],
+        ];
+        $dataProvider->sort->attributes['user'] = [
+            'asc' => ['user.full_name' => SORT_ASC],
+            'desc' => ['user.full_name' => SORT_DESC],
+        ];
 
-        if (!$this->validate()) {
+        if (!($this->load($params) && $this->validate())) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
@@ -66,7 +77,9 @@ class FileSearch extends File
 
         $query->andFilterWhere(['like', 'filename', $this->filename])
             ->andFilterWhere(['like', 'display_name', $this->display_name])
-            ->andFilterWhere(['like', 'description', $this->description]);
+            ->andFilterWhere(['like', 'description', $this->description])
+            ->andFilterWhere(['like', 'task.title', $this->task])
+            ->andFilterWhere(['like', 'user.full_name', $this->user]);
 
         return $dataProvider;
     }

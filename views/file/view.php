@@ -29,10 +29,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'task_id',
-            'user_id',
-            'filename',
-            'display_name',
+            [
+                'attribute' => 'task',
+                'format' => 'raw',
+                'value' => Html::a($model->task['title'], ['task/view', 'id' => $model->task_id], ['target' => '_blank'])
+            ],
+            [
+                'attribute' => 'user',
+                'format' => 'raw',
+                'value' => Html::a($model->user['full_name'], ['user/view', 'id' => $model->user_id], ['target' => '_blank'])
+            ],
+            [
+                'attribute' => 'display_name',
+                'format' => 'raw',
+                'value' => Html::a($model->display_name, ['file/load-file', 'id' => $model->id], ['target' => '_blank'])
+            ],
             'description:ntext',
         ],
     ]) ?>

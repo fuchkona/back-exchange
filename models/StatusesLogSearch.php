@@ -12,6 +12,9 @@ use app\models\StatusesLog;
  */
 class StatusesLogSearch extends StatusesLog
 {
+    public $task;
+    public $status;
+
     /**
      * {@inheritdoc}
      */
@@ -19,6 +22,7 @@ class StatusesLogSearch extends StatusesLog
     {
         return [
             [['id', 'task_id', 'status_id', 'created_at'], 'integer'],
+            [['task', 'status'], 'safe']
         ];
     }
 
@@ -41,6 +45,7 @@ class StatusesLogSearch extends StatusesLog
     public function search($params)
     {
         $query = StatusesLog::find();
+        $query->joinWith(['task', 'status']);
 
         // add conditions that should always apply here
 
@@ -48,9 +53,17 @@ class StatusesLogSearch extends StatusesLog
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $dataProvider->sort->attributes['task'] = [
+            'asc' => ['tasks.title' => SORT_ASC],
+            'desc' => ['tasks.title' => SORT_DESC],
+        ];
 
-        if (!$this->validate()) {
+        $dataProvider->sort->attributes['status'] = [
+            'asc' => ['statuses.title' => SORT_ASC],
+            'desc' => ['statuses.title' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) {
             // uncomment the following line if you do not want to return any records when validation fails
             // $query->where('0=1');
             return $dataProvider;
@@ -63,6 +76,10 @@ class StatusesLogSearch extends StatusesLog
             'status_id' => $this->status_id,
             'created_at' => $this->created_at,
         ]);
+
+        $query->andFilterWhere(['like', 'tasks.title', $this->task])
+            ->andFilterWhere(['like', 'statuses.title', $this->status]);
+
 
         return $dataProvider;
     }

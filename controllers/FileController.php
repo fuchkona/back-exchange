@@ -63,13 +63,23 @@ class FileController extends DefaultBehaviorController
     public function actionCreate()
     {
         $model = new File();
+        $model->setScenario(File::SCENARIO_FILE_CREATE);
+        $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
+            if ($model->upload()) {
+                if ($model->save(false)) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'tasks' => $tasks,
+            'users' => $users,
         ]);
     }
 
@@ -83,28 +93,61 @@ class FileController extends DefaultBehaviorController
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario(File::SCENARIO_FILE_UPDATE);
+        $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
+        $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
+
+            if ($model->file !== null) {
+                $model->deleteFile();
+            }
+
+            $model->upload();
+
+            if ($model->save(false)) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+
         }
 
         return $this->render('update', [
             'model' => $model,
+            'tasks' => $tasks,
+            'users' => $users,
         ]);
     }
 
     /**
-     * Deletes an existing File model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return \yii\web\Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+        $model->deleteFile();
+        $model->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\console\Response|\yii\web\Response
+     */
+    public function actionLoadFile($id)
+    {
+
+        $model = File::findOne($id);
+
+        $filePath = Yii::$app->basePath . '/web/files/'. $model->user_id . '/' . $model->filename;
+
+        return Yii::$app->response->sendFile($filePath, $model->filename);
     }
 
     /**

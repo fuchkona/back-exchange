@@ -29,8 +29,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'task_id',
-            'status_id',
+            [
+                'attribute' => 'task',
+                'value' => $model->task['title'],
+            ],
+            [
+                'attribute' => 'status',
+                'value' => $model->status['title'],
+            ],
             'created_at:datetime',
         ],
     ]) ?>
