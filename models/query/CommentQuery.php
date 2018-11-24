@@ -9,10 +9,10 @@ namespace app\models\query;
  */
 class CommentQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
+    public function byTask($taskId)
     {
-        return $this->andWhere('[[status]]=1');
-    }*/
+        return $this->andWhere(['task_id' => $taskId]);
+    }
 
     /**
      * {@inheritdoc}

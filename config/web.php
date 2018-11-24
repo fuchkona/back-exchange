@@ -44,6 +44,13 @@ $config = [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
                 ],
+                [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['info'],
+                    'categories' => ['test'],
+                    'logFile' => 'app/runtime/logs/test.log',
+                    'logVars' => ['_GET', '_POST', '!_POST.LoginForm', '_FILES', '_COOKIE', '_SESSION', '_SERVER']
+                ],
             ],
         ],
         'db' => $defaults['components']['db'],
@@ -53,7 +60,7 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['api/task', 'api/site']
+                    'controller' => ['api/task', 'api/site', 'api/comment']
                 ],
                 'api' => 'site/api'
             ],
