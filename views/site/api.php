@@ -379,7 +379,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">CommentController</div>
         <div class="panel-body">
-            <p><b>Route:</b> /api/comment/</p>
+            <p><b>Route:</b> /api/comments/</p>
             <p><b>Actions:</b></p>
             <ul>
                 <li>
@@ -388,7 +388,7 @@
                     </button>
                     <div id="getComments" class="collapse panel panel-primary">
                         <div class="panel-body">
-                            <p><b>Route:</b> /api/comment</p>
+                            <p><b>Route:</b> /api/comment/by-task</p>
                             <p><b>Method:</b> get</p>
                             <p><b>Params:</b> required params: task_id. / optional params: page, per-page
                                 </p>
