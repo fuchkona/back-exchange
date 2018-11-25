@@ -1,7 +1,7 @@
 <div class="restApi-default-index">
     <div class="jumbotron">
         <h1>Welcome to api page!</h1>
-        <p>Soon you will se here all allowed api</p>
+        <p>Here you can see all allowed api</p>
     </div>
     <hr>
     <div class="panel panel-default">
