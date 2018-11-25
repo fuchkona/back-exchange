@@ -95,8 +95,8 @@ class RequestController extends ActiveController
         try {
             Request::findOne($request_id)->delete();
         } catch (\Throwable $e) {
-            throw new NotFoundHttpException('Comment is not found');
+            throw new NotFoundHttpException('Request is not found');
         }
-        return ['The comment is removed'];
+        return ['The request is removed'];
     }
 }

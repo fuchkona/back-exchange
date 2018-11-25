@@ -37,7 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'requester',
                 'value' => $model->requester['full_name'],
             ],
-            'need_time:datetime',
+            [
+                'attribute' => 'need_time',
+                'value' => floor($model->need_time/60) . ' ч. ' . $model->need_time%60 . ' мин.'
+            ],
         ],
     ]) ?>
 
