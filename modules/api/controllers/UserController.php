@@ -13,7 +13,7 @@ use yii;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
 use app\modules\api\models\User;
-
+use yii\web\ServerErrorHttpException;
 
 
 /**
@@ -49,6 +49,24 @@ class UserController extends ActiveController
         return new ActiveDataProvider([
             'query' => $query,
         ]);
+    }
+
+    /**
+     * @return User|null
+     * @throws ServerErrorHttpException
+     * @throws yii\base\InvalidConfigException
+     */
+    public function actionUpdateProfile() {
+
+        $model = User::findOne(Yii::$app->user->identity);
+        $model->setScenario(User::SCENARIO_USER_UPDATE);
+
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+        if ($model->save() === false && !$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
+        }
+
+        return $model;
     }
 
 }
