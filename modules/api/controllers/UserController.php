@@ -28,6 +28,16 @@ class UserController extends ActiveController
      */
     public $modelClass = 'app\modules\api\models\User';
 
+    /**
+     * @return array
+     */
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['update']);
+
+        return $actions;
+    }
 
     /**
      * @return ActiveDataProvider
