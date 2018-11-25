@@ -14,6 +14,7 @@ use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
 use app\modules\api\models\User;
 use yii\web\ServerErrorHttpException;
+use app\modules\api\models\PasswordChangeForm;
 
 
 /**
@@ -69,4 +70,21 @@ class UserController extends ActiveController
         return $model;
     }
 
+    /**
+     * @return PasswordChangeForm|array
+     * @throws ServerErrorHttpException
+     * @throws yii\base\InvalidConfigException
+     */
+    public function actionChangePass() {
+        $user = User::findOne(Yii::$app->user->identity);
+        $model = new PasswordChangeForm($user);
+
+        $model->load(Yii::$app->getRequest()->getBodyParams(), '');
+
+        if(!$model->changePassword() && !$model->hasErrors()) {
+            throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
+        }
+
+        return $model;
+    }
 }
