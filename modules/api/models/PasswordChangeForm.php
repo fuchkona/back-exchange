@@ -58,7 +58,7 @@ class PasswordChangeForm extends Model
     public function fields()
     {
         return [
-            'currentPassword',
+            'oldPassword' => 'currentPassword',
             'newPassword',
         ];
     }
