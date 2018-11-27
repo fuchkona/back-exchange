@@ -60,11 +60,8 @@ class UserController extends ActiveController
      */
     public function actionProfile() {
 
-        $query = User::find()->byUser(Yii::$app->user->identity);
-
-        return new ActiveDataProvider([
-            'query' => $query,
-        ]);
+        $user = User::findOne(Yii::$app->user->id);
+        return $user;
     }
 
     /**
