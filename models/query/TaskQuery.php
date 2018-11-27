@@ -26,6 +26,14 @@ class TaskQuery extends \yii\db\ActiveQuery
     }
 
     /**
+     * @param $worker_id
+     * @return TaskQuery
+     */
+    public function byWorker ($worker_id) {
+        return $this->andWhere(['worker_id' => $worker_id]);
+    }
+
+    /**
      * {@inheritdoc}
      * @return \app\models\Task[]|array
      */

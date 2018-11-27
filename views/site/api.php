@@ -233,6 +233,63 @@
                     </div>
                 </li>
                 <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#getTasksByWorker">
+                        <b>Get tasks by worker</b> - getting all workers tasks with or without pagination
+                    </button>
+                    <div id="getTasksByWorker" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/task/by-worker/{worker_id}</p>
+                            <p><b>Method:</b> get</p>
+                            <p><b>Form data:</b> without params for getting all tasks / with params for pagination:
+                                page, per-page</p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "success": true,
+                                    "data": [
+                                    {
+                                    "id": 1,
+                                    "title": "Test",
+                                    "description": "Test task",
+                                    "contract_time": 0,
+                                    "deadline": 1,
+                                    "created_at": 1542818074,
+                                    "updated_at": 1542818074,
+                                    "owner": {
+                                    "id": 1,
+                                    "username": "nikita",
+                                    "full_name": "Fuchko N.A.",
+                                    "email": "fuchko.nikita@gmail.com"
+                                    },
+                                    "worker": {
+                                    "id": 1,
+                                    "username": "nikita",
+                                    "full_name": "Fuchko N.A.",
+                                    "email": "fuchko.nikita@gmail.com"
+                                    }
+                                    }
+                                    ]
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "success": false,
+                                    "data": {
+                                    "name": "Bad Request",
+                                    "message": "Missing required parameters: worker_id",
+                                    "code": 0,
+                                    "status": 400,
+                                    "type": "yii\\web\\BadRequestHttpException"
+                                    }
+                                    }
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
                     <button class="btn btn-link" data-toggle="collapse" data-target="#getOneTask">
                         <b>Get one task</b> - Getting one task by task id
                     </button>
@@ -823,7 +880,7 @@
                                     "field": "email",
                                     "message": "Email is not a valid email address."
                                     }
-                                ]</code>
+                                    ]</code>
                             </p>
                         </div>
                     </div>
@@ -874,7 +931,7 @@
                                     "field": "newPasswordRepeat",
                                     "message": "Passwords do not match"
                                     }
-                                ]</code>
+                                    ]</code>
                             </p>
                         </div>
                     </div>
