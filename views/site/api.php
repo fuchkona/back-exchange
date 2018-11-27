@@ -658,7 +658,7 @@
                     </button>
                     <div id="getUsers" class="collapse panel panel-primary">
                         <div class="panel-body">
-                            <p><b>Route:</b> /api/user/</p>
+                            <p><b>Route:</b> /api/users/</p>
                             <p><b>Method:</b> get</p>
                             <p><b>Form data:</b> without params for getting all users / with params for pagination:
                                 page, per-page</p>
@@ -704,7 +704,7 @@
                     </button>
                     <div id="viewUser" class="collapse panel panel-primary">
                         <div class="panel-body">
-                            <p><b>Route:</b> /api/user/view/{user id}</p>
+                            <p><b>Route:</b> /api/users/{user id}</p>
                             <p><b>Method:</b> get</p>
                             <p><b>Form data:</b></p>
                             <p><b>Success:</b>
