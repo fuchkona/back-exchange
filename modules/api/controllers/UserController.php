@@ -35,7 +35,6 @@ class UserController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['view']);
         unset($actions['create']);
         unset($actions['update']);
         unset($actions['delete']);
@@ -56,7 +55,7 @@ class UserController extends ActiveController
     }
 
     /**
-     * @return ActiveDataProvider
+     * @return User|null
      */
     public function actionProfile() {
 
