@@ -28,7 +28,7 @@ class User extends \app\models\User
             'time',
             'status',
             'created_at',
-            'update_at'
+            'updated_at'
         ];
     }
 

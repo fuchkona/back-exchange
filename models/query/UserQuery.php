@@ -25,6 +25,14 @@ class UserQuery extends \yii\db\ActiveQuery
         return $this->select($fields)->asArray()->all();
     }
 
+    /**
+     * @param $user_id
+     * @return UserQuery
+     */
+    public function byUser ($user_id) {
+        return $this->andWhere(['id' => $user_id]);
+    }
+
 
     /**
      * {@inheritdoc}

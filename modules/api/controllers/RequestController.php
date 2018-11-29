@@ -2,16 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: igroc
- * Date: 21.11.2018
- * Time: 18:22
+ * Date: 24.11.2018
+ * Time: 21:07
  */
 
 namespace app\modules\api\controllers;
 
 
-
-use app\modules\api\models\Comment;
-use app\services\CommentService;
+use app\modules\api\models\Request;
+use app\services\RequestService;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -19,10 +18,10 @@ use yii\rest\ActiveController;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
-class CommentController extends ActiveController
+class RequestController extends ActiveController
 {
 
-    public $modelClass = 'app\modules\api\models\Comment';
+    public $modelClass = 'app\modules\api\models\Request';
 
     public function behaviors()
     {
@@ -36,13 +35,13 @@ class CommentController extends ActiveController
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                             $currentUser = Yii::$app->user->identity;
-                            $comment = Comment::findOne(['id' => Yii::$app->request->get('comment_id')]);
+                            $request = Request::findOne(['id' => Yii::$app->request->get('request_id')]);
 
-                            if (isset($comment)){
-                                return CommentService::canDelete($currentUser, $comment);
+                            if (isset($request)){
+                                return RequestService::canDelete($currentUser, $request);
                             }
                             else{
-                                throw new NotFoundHttpException('Comment is not found');
+                                throw new NotFoundHttpException('Request is not found');
                             }
                         },
                     ],
@@ -76,7 +75,7 @@ class CommentController extends ActiveController
 
     public function actionByTask($task_id)
     {
-        $query = Comment::find()->byTask($task_id);
+        $query = Request::find()->byTask($task_id);
 
         $requestParams = Yii::$app->getRequest()->getQueryParams();
 
@@ -91,14 +90,13 @@ class CommentController extends ActiveController
         ]);
     }
 
-    public function actionDelete($comment_id)
+    public function actionDelete($request_id)
     {
         try {
-            Comment::findOne($comment_id)->delete();
+            Request::findOne($request_id)->delete();
         } catch (\Throwable $e) {
-            throw new NotFoundHttpException('Comment is not found');
+            throw new NotFoundHttpException('Request is not found');
         }
-        return ['The comment is removed'];
+        return ['The request is removed'];
     }
-
 }

@@ -44,6 +44,7 @@ class User extends ActiveRecord implements IdentityInterface
 
     const SCENARIO_ADMIN_CREATE = 'admin_create';
     const SCENARIO_ADMIN_UPDATE = 'admin_update';
+    const SCENARIO_USER_UPDATE = 'user_update';
 
 
     const RELATION_CREATED_TASKS = 'createdTasks';
@@ -72,6 +73,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function fields()
     {
         return [
+            'id',
             'username',
             'full_name',
             'email',
@@ -110,9 +112,9 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
             [['username', 'full_name', 'email'], 'required',
-                'on' => [self::SCENARIO_ADMIN_CREATE, self::SCENARIO_ADMIN_UPDATE]],
+                'on' => [self::SCENARIO_ADMIN_CREATE, self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE]],
             [['username', 'email'], 'unique',
-                'on' => [self::SCENARIO_ADMIN_CREATE, self::SCENARIO_ADMIN_UPDATE]],
+                'on' => [self::SCENARIO_ADMIN_CREATE, self::SCENARIO_ADMIN_UPDATE, self::SCENARIO_USER_UPDATE]],
             [['password'], 'required', 'on' => self::SCENARIO_ADMIN_CREATE],
 
         ];
