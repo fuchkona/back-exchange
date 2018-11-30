@@ -68,7 +68,7 @@ class StatusesLogController extends DefaultBehaviorController
     {
         $model = new StatusesLog();
         $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
-        $statuses = \app\models\Statuses::find()->select('title')->column();
+        $statuses = \app\models\Statuses::find()->select('title')->indexBy('id')->column();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -92,7 +92,7 @@ class StatusesLogController extends DefaultBehaviorController
     {
         $model = $this->findModel($id);
         $tasks = \app\models\Task::find()->selectFields(['id as value', 'title as label']);
-        $statuses = \app\models\Statuses::find()->select('title')->column();
+        $statuses = \app\models\Statuses::find()->select('title')->indexBy('id')->column();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
