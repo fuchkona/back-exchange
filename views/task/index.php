@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\TaskSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -32,19 +33,23 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'owner',
                 'format' => 'raw',
-                'value' => function($model) {
+                'value' => function ($model) {
                     return Html::a($model->owner['full_name'], ['user/view', 'id' => $model->owner_id], ['target' => '_blank']);
                 },
             ],
             [
                 'attribute' => 'worker',
                 'format' => 'raw',
-                'value' => function($model) {
+                'value' => function ($model) {
                     return Html::a($model->worker['full_name'], ['user/view', 'id' => $model->worker_id], ['target' => '_blank']);
                 },
             ],
             //'contract_time:datetime',
             'deadline:datetime',
+            [
+                'attribute' => 'currentStatus',
+                'value' => 'currentStatus.title'
+            ],
             //'created_at',
             //'updated_at',
 

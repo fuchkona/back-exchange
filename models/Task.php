@@ -25,6 +25,7 @@ use yii\behaviors\TimestampBehavior;
  * @property StatusesLog[] $statusesLogs
  * @property User $owner
  * @property User $worker
+ * @property User $currentStatus
  */
 class Task extends \yii\db\ActiveRecord
 {
@@ -119,6 +120,16 @@ class Task extends \yii\db\ActiveRecord
     public function getStatusesLogs()
     {
         return $this->hasMany(StatusesLog::className(), ['task_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCurrentStatus()
+    {
+        return $this->hasOne(Statuses::className(), ['id' => 'status_id'])
+            ->orderBy(['id'=>SORT_DESC])
+            ->via('statusesLogs');
     }
 
     /**

@@ -183,6 +183,10 @@
                                     "description": "description task",
                                     "contract_time": contract time,
                                     "deadline": deadline,
+                                    "currentStatus": {
+                                    "id": 1,
+                                    "title": "Новая задача"
+                                    },
                                     "created_at": created at,
                                     "updated_at": updated at,
                                     "owner": {
@@ -253,6 +257,10 @@
                                     "description": "Test task",
                                     "contract_time": 0,
                                     "deadline": 1,
+                                    "currentStatus": {
+                                    "id": 1,
+                                    "title": "Новая задача"
+                                    },
                                     "created_at": 1542818074,
                                     "updated_at": 1542818074,
                                     "owner": {
@@ -307,6 +315,10 @@
                                     "description": "description task",
                                     "contract_time": contract time,
                                     "deadline": deadline,
+                                    "currentStatus": {
+                                    "id": 2,
+                                    "title": "В работе"
+                                    },
                                     "created_at": created at,
                                     "updated_at": updated at,
                                     "owner": {
@@ -365,6 +377,10 @@
                                     "description": "description task",
                                     "contract_time": contract time,
                                     "deadline": deadline,
+                                    "currentStatus": {
+                                    "id": 1,
+                                    "title": "Новая задача"
+                                    },
                                     "created_at": created at,
                                     "updated_at": updated at,
                                     "owner": {

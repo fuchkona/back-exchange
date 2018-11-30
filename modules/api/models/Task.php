@@ -20,6 +20,7 @@ class Task extends \app\models\Task
             'description',
             'contract_time',
             'deadline',
+            'currentStatus',
             'created_at',
             'updated_at',
             'owner' => function(){
