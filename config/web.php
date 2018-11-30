@@ -27,6 +27,15 @@ $config = [
             'identityClass' => 'app\models\User',
             'enableAutoLogin' => true,
         ],
+        'statusesLogService' => [
+            'class' => app\services\StatusesLogService::class,
+        ],
+        'taskService' => [
+            'class' => app\services\TaskService::class,
+            'on create_task' => function (\app\services\events\CreateTaskEvent $event) {
+                Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
+            },
+        ],
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
