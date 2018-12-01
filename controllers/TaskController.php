@@ -67,7 +67,6 @@ class TaskController extends DefaultBehaviorController
         $model = new Task();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->taskService->createTask($model);
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
