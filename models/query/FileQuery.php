@@ -15,6 +15,14 @@ class FileQuery extends \yii\db\ActiveQuery
     }*/
 
     /**
+     * @param $task_id
+     * @return FileQuery
+     */
+    public function byTask ($task_id) {
+        return $this->andWhere(['task_id' => $task_id]);
+    }
+
+    /**
      * {@inheritdoc}
      * @return \app\models\File[]|array
      */

@@ -52,8 +52,21 @@ class TaskController extends DefaultBehaviorController
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $fileDataProvider = new \yii\data\ActiveDataProvider([
+            'query' => \app\models\File::find()->byTask($model->id),
+        ]);
+        $fileDataProvider->pagination->pageSize = 5;
+        
+        $commentDataProvider = new \yii\data\ActiveDataProvider([
+            'query' => \app\models\Comment::find()->byTask($model->id),
+        ]);
+        $commentDataProvider->pagination->pageSize = 5;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'fileDataProvider' => $fileDataProvider,
+            'commentDataProvider' => $commentDataProvider,
         ]);
     }
 
