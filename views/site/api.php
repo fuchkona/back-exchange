@@ -426,19 +426,25 @@
                             <p><b>Form data:</b> task_id</p>
                             <p><b>Success:</b>
                                 <code style="white-space: pre-line">
+                                    {
                                     "success": true,
-                                    "data: ["The task is removed"]
+                                    "data": {
+                                    "id": "{task id}"
+                                    }
+                                    }
                                 </code>
                             </p>
                             <p><b>Error:</b>
                                 <code style="white-space: pre-line">
+                                    {
                                     "success": false,
-                                    "data: {
-                                    "name":"Not Found",
-                                    "message":"Task is not found",
-                                    "code":0,
-                                    "status":404,
-                                    "type":"yii\\web\\NotFoundHttpException"
+                                    "data": {
+                                    "name": "Not Found",
+                                    "message": "Task is not found.",
+                                    "code": 0,
+                                    "status": 404,
+                                    "type": "yii\\web\\NotFoundHttpException"
+                                    }
                                     }
                                 </code>
                             </p>

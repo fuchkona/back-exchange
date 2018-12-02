@@ -58,13 +58,22 @@ class TaskController extends ActiveController
         ]);
     }
 
+    /**
+     * @param $task_id
+     * @return array
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDelete($task_id)
     {
-        try {
-            Task::findOne($task_id)->delete();
-        } catch (\Throwable $e) {
-            throw new NotFoundHttpException('Task is not found');
+        $task = Task::findOne($task_id);
+        if (!$task) {
+            throw new NotFoundHttpException("Task is not found.");
         }
-        return ['The task is removed'];
+        $task->delete();
+        return [
+            'id' => $task_id,
+        ];
     }
 }
