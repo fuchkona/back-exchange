@@ -961,4 +961,149 @@
             </ul>
         </div>
     </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">FileController</div>
+        <div class="panel-body">
+            <p><b>Route:</b> /api/file/</p>
+            <p><b>Actions:</b></p>
+            <ul>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#getMyFiles">
+                        <b>Get files</b> - getting files added by an authorized user with or without pagination
+                    </button>
+                    <div id="getMyFiles" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/file/my-file</p>
+                            <p><b>Method:</b> get</p>
+                            <p><b>Form data:</b> without params for getting files / with params for pagination:
+                                page, per-page</p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    "success": true,
+                                    "data": [
+                                    {
+                                    "id": file_id,
+                                    "task_id": task_id,
+                                    "user_id": user_id,
+                                    "filename": "filename.extension",
+                                    "display_name": "display_name",
+                                    "description": "description"
+                                    },
+                                    {another file},
+                                    {another file},
+                                    ]
+
+                                    task extra_field:
+                                    "task": {
+                                    "id": task_id,
+                                    "title": "title",
+                                    "description": "description",
+                                    "owner_id": owner_id,
+                                    "worker_id": worker_id,
+                                    "contract_time": contract_time,
+                                    "deadline": deadline,
+                                    "created_at": created_at,
+                                    "updated_at": updated_at
+                                    },
+                                    user extra_field:
+                                    "user": {
+                                    "id": user_id,
+                                    "username": "username",
+                                    "full_name": "full_name",
+                                    "email": "email"
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+                                    "success": false,
+                                    "data: {
+                                    "name": "Unauthorized",
+                                    "message": "Your request was made with invalid credentials.",
+                                    "code": 0,
+                                    "status": 401,
+                                    "type": "yii\\web\\UnauthorizedHttpException"
+                                    }
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#fileByTask">
+                        <b>Get file by task</b> - get files by task_id if authorized user is the owner or the worker
+                        of this task.
+                    </button>
+                    <div id="fileByTask" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/file/{task_id}</p>
+                            <p><b>Method:</b> get</p>
+                            <p><b>Form data:</b>without params for getting files / with params for pagination:
+                                page, per-page</p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    "success": true,
+                                    "data": [
+                                    {
+                                    "id": file_id,
+                                    "task_id": task_id,
+                                    "user_id": user_id,
+                                    "filename": "filename.extension",
+                                    "display_name": "display_name",
+                                    "description": "description"
+                                    },
+                                    {another file},
+                                    {another file},
+                                    ]
+
+                                    task extra_field:
+                                    "task": {
+                                    "id": task_id,
+                                    "title": "title",
+                                    "description": "description",
+                                    "owner_id": owner_id,
+                                    "worker_id": worker_id,
+                                    "contract_time": contract_time,
+                                    "deadline": deadline,
+                                    "created_at": created_at,
+                                    "updated_at": updated_at
+                                    },
+                                    user extra_field:
+                                    "user": {
+                                    "id": user_id,
+                                    "username": "username",
+                                    "full_name": "full_name",
+                                    "email": "email"
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+                                    "success": false,
+                                    "data: [
+                                    {
+                                    "name": "Unauthorized",
+                                    "message": "Your request was made with invalid credentials.",
+                                    "code": 0,
+                                    "status": 401,
+                                    "type": "yii\\web\\UnauthorizedHttpException"
+                                    },
+                                    {
+                                    "name": "Exception",
+                                    "message": "Access error. You are not owner or worker of this task!",
+                                    "code": 0,
+                                    "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
+                                    "file": "filename",
+                                    "line": number of line,
+                                    "stack-trace": []
+                                    ]
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
