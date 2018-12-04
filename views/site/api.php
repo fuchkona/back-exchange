@@ -974,7 +974,7 @@
                     </button>
                     <div id="getMyFiles" class="collapse panel panel-primary">
                         <div class="panel-body">
-                            <p><b>Route:</b> /api/file/my-file</p>
+                            <p><b>Route:</b> /api/file/my-files</p>
                             <p><b>Method:</b> get</p>
                             <p><b>Form data:</b> without params for getting files / with params for pagination:
                                 page, per-page</p>
@@ -1037,9 +1037,9 @@
                     </button>
                     <div id="fileByTask" class="collapse panel panel-primary">
                         <div class="panel-body">
-                            <p><b>Route:</b> /api/file/{task_id}</p>
+                            <p><b>Route:</b> /api/file/files-by-task</p>
                             <p><b>Method:</b> get</p>
-                            <p><b>Form data:</b>without params for getting files / with params for pagination:
+                            <p><b>Params:</b>required params: task_id / with params for pagination:
                                 page, per-page</p>
                             <p><b>Success:</b>
                                 <code style="white-space: pre-line">
