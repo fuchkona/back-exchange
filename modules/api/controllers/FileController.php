@@ -31,6 +31,7 @@ class FileController extends ActiveController
     {
         $actions = parent::actions();
         unset($actions['index']);
+        unset($actions['create']);
 
         return $actions;
     }
@@ -43,6 +44,7 @@ class FileController extends ActiveController
         $verbs = parent::verbs();
         $verbs['my-files'] = ['GET', 'HEAD'];
         $verbs['files-by-task'] = ['GET', 'HEAD'];
+        $verbs['create'] = ['POST'];
         return $verbs;
     }
 
@@ -90,5 +92,18 @@ class FileController extends ActiveController
                 'params' => $requestParams,
             ],
         ]);
+    }
+
+    /**
+     * @return File
+     */
+    public function actionCreate() {
+        $model = new File();
+        $model->setScenario(File::SCENARIO_FILE_CREATE);
+        $model->load(\Yii::$app->request->bodyParams, '');
+        $model->file = \yii\web\UploadedFile::getInstanceByName('file');
+        $model->save();
+        $model->upload();
+        return $model;
     }
 }

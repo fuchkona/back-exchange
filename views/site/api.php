@@ -1103,6 +1103,58 @@
                         </div>
                     </div>
                 </li>
+                <li>
+                    <button class="btn btn-link" data-toggle="collapse" data-target="#createFile">
+                        <b>Create File</b> - creating new file
+                    </button>
+                    <div id="getMyFiles" class="collapse panel panel-primary">
+                        <div class="panel-body">
+                            <p><b>Route:</b> /api/file/create</p>
+                            <p><b>Method:</b> post</p>
+                            <p><b>Form data:</b>required params: task_id, user_id, filename, file. Extra params: display_name, description</p>
+                            <p><b>Success:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "success": true,
+                                    "data": {
+                                    "id": 5,
+                                    "task_id": "1",
+                                    "user_id": "1",
+                                    "filename": "1544039825.pdf",
+                                    "display_name": null,
+                                    "description": null
+                                    }
+                                    }
+                                </code>
+                            </p>
+                            <p><b>Error:</b>
+                                <code style="white-space: pre-line">
+                                    {
+                                    "success": false,
+                                    "data": [
+                                    {
+                                    "field": "task_id",
+                                    "message": "Task ID cannot be blank."
+                                    },
+                                    {
+                                    "field": "user_id",
+                                    "message": "User ID cannot be blank."
+                                    },
+                                    {
+                                    "field": "filename",
+                                    "message": "Filename cannot be blank."
+                                    },
+                                    {
+                                    "field": "file",
+                                    "message": "File cannot be blank."
+                                    }
+                                    ]
+                                    }
+                                </code>
+                            </p>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
