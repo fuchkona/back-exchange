@@ -118,7 +118,7 @@ class File extends \yii\db\ActiveRecord
      */
     public function uploadFile($filename) {
 
-        if ($this->file->saveAs($filename)) {
+        if ($this->file && $this->file->saveAs($filename)) {
             return true;
         } else {
             return false;
