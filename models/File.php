@@ -50,9 +50,9 @@ class File extends \yii\db\ActiveRecord
             [['task_id', 'user_id'], 'integer'],
             [['description'], 'string'],
             [['filename', 'display_name'], 'string', 'max' => 300],
-            [['file'], 'file', 'extensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'jpg', 'png', 'txt', 'zip, 'rar'], 'maxSize' => 2097152,
+            [['file'], 'file', 'extensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'jpg', 'png', 'txt', 'zip', 'rar'], 'maxSize' => 2097152,
                 'tooBig' => 'Максимальный размер файла 2 Мб.',
-                'wrongExtension' => 'Файл, должен иметь формат: .pdf, .doc, .docx, .xls, .xlsx, .xlsm, , .txt, .zip, .rar, .jpg, .png'
+                'wrongExtension' => 'Файл, должен иметь формат: .pdf, .doc, .docx, .xls, .xlsx, .xlsm, .txt, .zip, .rar, .jpg, .png'
             ],
             [['task_id', 'user_id', 'filename'], 'required',
                 'on' => [self::SCENARIO_FILE_CREATE, self::SCENARIO_FILE_UPDATE]],
