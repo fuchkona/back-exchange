@@ -90,13 +90,22 @@ class RequestController extends ActiveController
         ]);
     }
 
+    /**
+     * @param $request_id
+     * @return array
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDelete($request_id)
     {
-        try {
-            Request::findOne($request_id)->delete();
-        } catch (\Throwable $e) {
-            throw new NotFoundHttpException('Request is not found');
+        $request = Request::findOne($request_id);
+        if (!$request) {
+            throw new NotFoundHttpException("Request is not found.");
         }
-        return ['The request is removed'];
+        $request->delete();
+        return [
+            'id' => $request_id,
+        ];
     }
 }

@@ -91,14 +91,23 @@ class CommentController extends ActiveController
         ]);
     }
 
+    /**
+     * @param $comment_id
+     * @return array
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDelete($comment_id)
     {
-        try {
-            Comment::findOne($comment_id)->delete();
-        } catch (\Throwable $e) {
-            throw new NotFoundHttpException('Comment is not found');
+        $comment = Comment::findOne($comment_id);
+        if (!$comment) {
+            throw new NotFoundHttpException("Comment is not found.");
         }
-        return ['The comment is removed'];
+        $comment->delete();
+        return [
+            'id' => $comment_id,
+        ];
     }
 
 }
