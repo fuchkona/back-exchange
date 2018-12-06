@@ -35,6 +35,9 @@ $config = [
             'on create_task' => function (\app\services\events\CreateTaskEvent $event) {
                 Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
             },
+            'on accept_task_request' => function (\app\services\events\AcceptTaskRequestEvent $event) {
+                Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
+            },
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
