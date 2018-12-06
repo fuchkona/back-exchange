@@ -15,6 +15,8 @@ use Yii;
  * @property string $display_name
  * @property string $description
  *
+ * @var string $filePath
+ *
  * @property Task $task
  * @property User $user
  *
@@ -23,6 +25,7 @@ use Yii;
 class File extends \yii\db\ActiveRecord
 {
     public $file;
+    public $filePath;
 
     const SCENARIO_FILE_CREATE = 'file_create';
     const SCENARIO_FILE_UPDATE = 'file_update';
@@ -47,9 +50,9 @@ class File extends \yii\db\ActiveRecord
             [['task_id', 'user_id'], 'integer'],
             [['description'], 'string'],
             [['filename', 'display_name'], 'string', 'max' => 300],
-            [['file'], 'file', 'extensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'jpg', 'png'], 'maxSize' => 2097152,
+            [['file'], 'file', 'extensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'xlsm', 'jpg', 'png', 'txt', 'zip, 'rar'], 'maxSize' => 2097152,
                 'tooBig' => 'Максимальный размер файла 2 Мб.',
-                'wrongExtension' => 'Файл, должен иметь формат: .pdf, .doc, .docx, .xls, .xlsx, .xlsm, .jpg, .png'
+                'wrongExtension' => 'Файл, должен иметь формат: .pdf, .doc, .docx, .xls, .xlsx, .xlsm, , .txt, .zip, .rar, .jpg, .png'
             ],
             [['task_id', 'user_id', 'filename'], 'required',
                 'on' => [self::SCENARIO_FILE_CREATE, self::SCENARIO_FILE_UPDATE]],
@@ -79,14 +82,12 @@ class File extends \yii\db\ActiveRecord
     /**
      * @return bool
      */
-    public function upload()
+    public function setFields()
     {
-
         if ($this->file) {
-
             $this->filename = time() . '.' . $this->file->extension;
 
-            if ($this->display_name === '') {
+            if ($this->display_name == false) {
                 $this->display_name = $this->file->baseName;
             }
 
@@ -102,16 +103,28 @@ class File extends \yii\db\ActiveRecord
                     mkdir($filePath);
                 }
 
-                $this->file->saveAs($filePath . '/' . $this->filename);
-                return true;
+                $this->filePath = $filePath . '/' . $this->filename;
 
-            } else {
-                return false;
+                return true;
             }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param $filename
+     * @return bool
+     */
+    public function uploadFile($filename) {
+
+        if ($this->file->saveAs($filename)) {
+            return true;
+        } else {
+            return false;
         }
 
     }
-
     /**
      * @return bool
      */

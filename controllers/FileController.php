@@ -68,8 +68,11 @@ class FileController extends DefaultBehaviorController
         $users = \app\models\User::find()->selectFields(['id as value', 'full_name as label']);
 
         if ($model->load(Yii::$app->request->post())) {
+
             $model->file = \yii\web\UploadedFile::getInstance($model, 'file');
-            if ($model->upload()) {
+            
+            $model->setFields();
+            if ($model->uploadFile($model->filePath)) {
                 if ($model->save(false)) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
@@ -103,9 +106,9 @@ class FileController extends DefaultBehaviorController
 
             if ($model->file !== null) {
                 $model->deleteFile();
+                $model->setFields();
+                $model->uploadFile($model->filePath);
             }
-
-            $model->upload();
 
             if ($model->save(false)) {
                 return $this->redirect(['view', 'id' => $model->id]);
