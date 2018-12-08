@@ -101,7 +101,7 @@ class FileController extends ActiveController
         \Yii::info($_FILES, 'test');
         $model = new File();
         $model->setScenario(File::SCENARIO_FILE_CREATE);
-        $model->load(\Yii::$app->request->post(), '');
+        $model->load(\Yii::$app->request->bodyParams, '');
         $model->file = \yii\web\UploadedFile::getInstanceByName('file');
         $model->setFields();
         $model->save();
