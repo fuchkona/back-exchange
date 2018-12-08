@@ -44,6 +44,7 @@ class FileController extends ActiveController
         $verbs = parent::verbs();
         $verbs['my-files'] = ['GET', 'HEAD'];
         $verbs['files-by-task'] = ['GET', 'HEAD'];
+        $verbs['load-file'] = ['GET', 'HEAD'];
         $verbs['create'] = ['POST'];
         return $verbs;
     }
@@ -92,6 +93,20 @@ class FileController extends ActiveController
                 'params' => $requestParams,
             ],
         ]);
+    }
+
+    /**
+     * @param $id
+     * @return \yii\console\Response|\yii\web\Response
+     */
+    public function actionLoadFile($id)
+    {
+
+        $model = File::findOne($id);
+
+        $filePath = \Yii::$app->basePath . '/web/files/'. $model->user_id . '/' . $model->filename;
+
+        return \Yii::$app->response->sendFile($filePath, $model->filename);
     }
 
     /**

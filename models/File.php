@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\Html;
+use yii\web\UrlManager;
 
 /**
  * This is the model class for table "files".
@@ -113,7 +115,7 @@ class File extends \yii\db\ActiveRecord
     }
 
     public function getUrl() {
-        return "http://$_SERVER[HTTP_HOST]" . '/files/'. $this->user_id . '/' . $this->filename;
+        return \yii\helpers\Url::toRoute(['file/load-file', 'id' => $this->id], true);
     }
 
     /**
