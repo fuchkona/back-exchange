@@ -21,6 +21,7 @@ class File extends \app\models\File
             'task_id',
             'user_id',
             'filename',
+            'url',
             'display_name',
             'description',
         ];

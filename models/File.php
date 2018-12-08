@@ -112,6 +112,10 @@ class File extends \yii\db\ActiveRecord
         }
     }
 
+    public function getUrl() {
+        return "http://$_SERVER[HTTP_HOST]" . '/files/'. $this->user_id . '/' . $this->filename;
+    }
+
     /**
      * @param $filename
      * @return bool
