@@ -118,6 +118,12 @@ class TaskController extends ActiveController
         if (!$task) {
             throw new NotFoundHttpException("Task is not found.");
         }
+        if ($task->owner_id != Yii::$app->user->id) {
+            throw new AccessDeniedException("Вы не являетесь владельцем данной задачи!");
+        }
+        if ($task->currentStatus->id != Yii::$app->params['newTaskStatusId']) {
+            throw new AccessDeniedException("Задача должна быть в статусе новой!");
+        }
         $task->delete();
         return [
             'id' => $task_id,
