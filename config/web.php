@@ -18,7 +18,7 @@ $config = [
             'baseUrl' => '',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
-                'multipart/form-data' => 'yii\web\MultipartFormDataParser'
+                //'multipart/form-data' => 'yii\web\MultipartFormDataParser'
             ]
         ],
         'cache' => [
