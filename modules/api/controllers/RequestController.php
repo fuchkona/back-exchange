@@ -97,6 +97,8 @@ class RequestController extends ActiveController
         } catch (\Throwable $e) {
             throw new NotFoundHttpException('Request is not found');
         }
-        return ['The request is removed'];
+        return [
+            'id' => $request_id,
+        ];
     }
 }

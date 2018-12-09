@@ -98,7 +98,9 @@ class CommentController extends ActiveController
         } catch (\Throwable $e) {
             throw new NotFoundHttpException('Comment is not found');
         }
-        return ['The comment is removed'];
+        return [
+            'id' => $comment_id,
+        ];
     }
 
 }
