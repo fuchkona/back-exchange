@@ -45,6 +45,9 @@ $config = [
             'on confirm_task_execution' => function (\app\services\events\ConfirmTaskExecutionEvent $event) {
                 Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
             },
+            'on deny_task_execution' => function (\app\services\events\DenyTaskExecutionEvent $event) {
+                Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
+            },
             'on sent_task_for_review' => function (\app\services\events\SentTaskForReviewEvent $event) {
                 Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
             },

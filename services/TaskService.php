@@ -11,6 +11,7 @@ namespace app\services;
 use app\models\Request;
 use app\services\events\AcceptTaskRequestEvent;
 use app\services\events\ConfirmTaskExecutionEvent;
+use app\services\events\DenyTaskExecutionEvent;
 use app\services\events\SentTaskForReviewEvent;
 use yii\base\Component;
 use app\services\events\CreateTaskEvent;
@@ -24,6 +25,7 @@ class TaskService extends Component
     const EVENT_CREATE_TASK = 'create_task';
     const EVENT_ACCEPT_TASK_REQUEST = 'accept_task_request';
     const EVENT_CONFIRM_TASK_EXECUTION = 'confirm_task_execution';
+    const EVENT_DENY_TASK_EXECUTION = 'deny_task_execution';
     const EVENT_SENT_TASK_FOR_REVIEW = 'sent_task_for_review';
 
     /**
@@ -59,6 +61,17 @@ class TaskService extends Component
         $event->task = $task;
         $event->status_id = \Yii::$app->params['taskCompletedStatusId'];
         $this->trigger(self::EVENT_CONFIRM_TASK_EXECUTION, $event);
+    }
+
+    /**
+     * @param Task $task
+     */
+    public function denyTaskExecution (Task $task)
+    {
+        $event = new DenyTaskExecutionEvent();
+        $event->task = $task;
+        $event->status_id = \Yii::$app->params['taskAtWorkStatusId'];
+        $this->trigger(self::EVENT_DENY_TASK_EXECUTION, $event);
     }
 
     /**
