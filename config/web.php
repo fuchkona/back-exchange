@@ -34,6 +34,12 @@ $config = [
         'fileService' => [
             'class' => app\services\FileService::class,
         ],
+        'requestService' => [
+            'class' => app\services\RequestService::class,
+        ],
+        'commentService' => [
+            'class' => app\services\CommentService::class,
+        ],
         'taskService' => [
             'class' => app\services\TaskService::class,
             'on create_task' => function (\app\services\events\CreateTaskEvent $event) {
