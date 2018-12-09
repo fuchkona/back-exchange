@@ -22,6 +22,8 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
  */
 class FileController extends ActiveController
 {
+
+
     /**
      * @var string $modelClass
      */
