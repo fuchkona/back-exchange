@@ -36,6 +36,15 @@ $config = [
             'on create_task' => function (\app\services\events\CreateTaskEvent $event) {
                 Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
             },
+            'on accept_task_request' => function (\app\services\events\AcceptTaskRequestEvent $event) {
+                Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
+            },
+            'on confirm_task_execution' => function (\app\services\events\ConfirmTaskExecutionEvent $event) {
+                Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
+            },
+            'on sent_task_for_review' => function (\app\services\events\SentTaskForReviewEvent $event) {
+                Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
+            },
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
