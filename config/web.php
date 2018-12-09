@@ -18,6 +18,7 @@ $config = [
             'baseUrl' => '',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
+                //'multipart/form-data' => 'yii\web\MultipartFormDataParser'
             ]
         ],
         'cache' => [
@@ -72,7 +73,7 @@ $config = [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => ['api/user', 'api/task', 'api/site', 'api/comment', 'api/request']
+                    'controller' => ['api/user', 'api/task', 'api/site', 'api/comment', 'api/request', 'api/file']
                 ],
                 'api' => 'site/api'
             ],

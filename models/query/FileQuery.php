@@ -23,6 +23,14 @@ class FileQuery extends \yii\db\ActiveQuery
     }
 
     /**
+     * @param $user_id
+     * @return FileQuery
+     */
+    public function byUser ($user_id) {
+        return $this->andWhere(['user_id' => $user_id]);
+    }
+
+    /**
      * {@inheritdoc}
      * @return \app\models\File[]|array
      */
