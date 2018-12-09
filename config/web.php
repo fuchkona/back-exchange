@@ -31,6 +31,9 @@ $config = [
         'statusesLogService' => [
             'class' => app\services\StatusesLogService::class,
         ],
+        'fileService' => [
+            'class' => app\services\FileService::class,
+        ],
         'taskService' => [
             'class' => app\services\TaskService::class,
             'on create_task' => function (\app\services\events\CreateTaskEvent $event) {
