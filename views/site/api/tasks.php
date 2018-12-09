@@ -300,7 +300,7 @@
                     <div class="panel-body">
                         <p><b>Route:</b> /api/task/accept-request</p>
                         <p><b>Method:</b> POST</p>
-                        <p><b>Params:</b> request_id</p>
+                        <p><b>Params:</b> task_id, request_id</p>
                         <p><b>Success:</b>
                             <code style="white-space: pre-line">
                                 {
@@ -322,6 +322,98 @@
                                 "line": 82,
                                 }
                                 }
+                            </code>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <button class="btn btn-link" data-toggle="collapse" data-target="#sendForReview">
+                    <b>Send for review</b> - send work results for review
+                </button>
+                <div id="sendForReview" class="collapse panel panel-primary">
+                    <div class="panel-body">
+                        <p><b>Route:</b> /api/task/send-for-review</p>
+                        <p><b>Method:</b> POST</p>
+                        <p><b>Params:</b> task_id</p>
+                        <p><b>Success:</b>
+                            <code style="white-space: pre-line">
+                                {
+                                "success": true,
+                                "data": true
+                                }
+                            </code>
+                        </p>
+                        <p><b>Error:</b>
+                            <code style="white-space: pre-line">
+                                {
+                                "success": false,
+                                "data": [
+                                {
+                                "name": "Exception",
+                                "message": "Вы не являетесь исполнителем данной задачи!",
+                                "code": 0,
+                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
+                                "file": "/app/services/TaskService.php",
+                                "line": 102,
+                                "stack-trace": [...]
+                                },
+                                {
+                                "name": "Exception",
+                                "message": "Задача должна иметь статус: \"В работе\"!",
+                                "code": 0,
+                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
+                                "file": "/app/modules/api/controllers/TaskController.php",
+                                "line": 205,
+                                "stack-trace": [...]
+                                }
+                                ]
+                            </code>
+                        </p>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <button class="btn btn-link" data-toggle="collapse" data-target="#confirmExecution">
+                    <b>Confirm task execution</b> - confirm task execution
+                </button>
+                <div id="confirmExecution" class="collapse panel panel-primary">
+                    <div class="panel-body">
+                        <p><b>Route:</b> /api/task/confirm-execution</p>
+                        <p><b>Method:</b> POST</p>
+                        <p><b>Params:</b> task_id</p>
+                        <p><b>Success:</b>
+                            <code style="white-space: pre-line">
+                                {
+                                "success": true,
+                                "data": true
+                                }
+                            </code>
+                        </p>
+                        <p><b>Error:</b>
+                            <code style="white-space: pre-line">
+                                {
+                                "success": false,
+                                "data": [
+                                {
+                                "name": "Exception",
+                                "message": "Задача должна иметь статус: \"Отправлена исполнителем на проверку\"!",
+                                "code": 0,
+                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
+                                "file": "/app/modules/api/controllers/TaskController.php",
+                                "line": 173,
+                                "stack-trace": [...]
+                                },
+                                {
+                                "name": "Exception",
+                                "message": "Вы не являетесь владельцем данной задачи!",
+                                "code": 0,
+                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
+                                "file": "/app/services/TaskService.php",
+                                "line": 85,
+                                "stack-trace": [...]
+                                }
+                                ]
                             </code>
                         </p>
                     </div>
