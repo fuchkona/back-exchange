@@ -11,9 +11,13 @@ namespace app\modules\api\controllers;
 
 use app\models\Task;
 use app\modules\api\models\File;
+use Yii;
+use yii\filters\AccessControl;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
 use Symfony\Component\Finder\Exception\AccessDeniedException;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 
 /**
@@ -23,6 +27,58 @@ use Symfony\Component\Finder\Exception\AccessDeniedException;
 class FileController extends ActiveController
 {
 
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['delete'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            $currentUser = Yii::$app->user->identity;
+                            $file = File::findOne(['id' => Yii::$app->request->get('file_id')]);
+
+                            if (isset($file)){
+                                return Yii::$app->fileService->areYouOwner($currentUser, $file)
+                                    && !Yii::$app->taskService->haveCurrentStatus($file->task, Yii::$app->params['taskCompletedStatusId']);
+                            }
+                            else{
+                                throw new NotFoundHttpException('File is not found');
+                            }
+                        },
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['my-files', 'index', 'load-file', 'create'],
+                        'roles' => ['@']
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['files-by-task'],
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rules, $action) {
+                            $currentUser = Yii::$app->user->identity;
+                            $file = File::findOne(['id' => Yii::$app->request->get('file_id')]);
+
+                            if (isset($file)){
+                                return Yii::$app->taskService->areYouWorker($currentUser, $file->task)
+                                    || Yii::$app->taskService->areYouOwner($currentUser, $file->task);
+                            }
+                            else{
+                                throw new NotFoundHttpException('File is not found');
+                            }
+                        }
+                    ]
+                ],
+                'denyCallback' => function () {
+                    throw new ForbiddenHttpException('You a not have permissions for this action');
+                }
+            ],
+        ];
+    }
 
     /**
      * @var string $modelClass
@@ -34,6 +90,7 @@ class FileController extends ActiveController
         $actions = parent::actions();
         unset($actions['index']);
         unset($actions['create']);
+        unset($actions['delete']);
 
         return $actions;
     }
@@ -124,5 +181,24 @@ class FileController extends ActiveController
         $model->uploadFile($model->filePath);
 
         return $model;
+    }
+
+    /**
+     * @param $file_id
+     * @return array
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionDelete($file_id)
+    {
+        $file = File::findOne($file_id);
+        if (!$file) {
+            throw new NotFoundHttpException("File is not found.");
+        }
+        $file->delete();
+        return [
+            'id' => $file_id,
+        ];
     }
 }

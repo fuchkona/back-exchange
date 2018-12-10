@@ -11,13 +11,13 @@ namespace app\services;
 
 
 use app\models\Comment;
-use Yii;
+use yii\base\Component;
 use yii\web\IdentityInterface;
 
-class CommentService
+class CommentService extends Component
 {
 
-    public static function canDelete(IdentityInterface $user, Comment $comment)
+    public function canDelete(IdentityInterface $user, Comment $comment)
     {
         return $user->getId() == $comment->author_id;
     }

@@ -31,6 +31,15 @@ $config = [
         'statusesLogService' => [
             'class' => app\services\StatusesLogService::class,
         ],
+        'fileService' => [
+            'class' => app\services\FileService::class,
+        ],
+        'requestService' => [
+            'class' => app\services\RequestService::class,
+        ],
+        'commentService' => [
+            'class' => app\services\CommentService::class,
+        ],
         'taskService' => [
             'class' => app\services\TaskService::class,
             'on create_task' => function (\app\services\events\CreateTaskEvent $event) {
@@ -40,6 +49,9 @@ $config = [
                 Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
             },
             'on confirm_task_execution' => function (\app\services\events\ConfirmTaskExecutionEvent $event) {
+                Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
+            },
+            'on deny_task_execution' => function (\app\services\events\DenyTaskExecutionEvent $event) {
                 Yii::$app->statusesLogService->createStatusesLog($event->task->id, $event->status_id);
             },
             'on sent_task_for_review' => function (\app\services\events\SentTaskForReviewEvent $event) {

@@ -11,7 +11,6 @@ namespace app\modules\api\controllers;
 
 
 use app\modules\api\models\Comment;
-use app\services\CommentService;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
@@ -39,7 +38,7 @@ class CommentController extends ActiveController
                             $comment = Comment::findOne(['id' => Yii::$app->request->get('comment_id')]);
 
                             if (isset($comment)){
-                                return CommentService::canDelete($currentUser, $comment);
+                                return Yii::$app->commentService->canDelete($currentUser, $comment);
                             }
                             else{
                                 throw new NotFoundHttpException('Comment is not found');

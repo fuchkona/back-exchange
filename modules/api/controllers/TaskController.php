@@ -30,7 +30,7 @@ class TaskController extends ActiveController
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['update', 'delete', 'accept-request', 'confirm-execution'],
+                        'actions' => ['update', 'delete', 'accept-request', 'confirm-execution', 'deny-execution'],
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                             $currentUser = Yii::$app->user->identity;
@@ -91,6 +91,7 @@ class TaskController extends ActiveController
         $verbs['by-worker'] = ['GET', 'HEAD'];
         $verbs['accept-request'] = ['POST'];
         $verbs['confirm-execution'] = ['POST'];
+        $verbs['deny-execution'] = ['POST'];
         $verbs['send-for-review'] = ['POST'];
         return $verbs;
     }
@@ -189,6 +190,24 @@ class TaskController extends ActiveController
             $transaction->rollBack();
             return false;
         }
+        Yii::$app->taskService->confirmTaskExecution($task);
+        return true;
+    }
+
+    /**
+     * @param $task_id
+     * @return bool
+     * @throws \yii\db\Exception
+     */
+    public function actionDenyExecution ($task_id)
+    {
+        $task = Task::findOne($task_id);
+        $worker = $task->worker;
+
+        if (!Yii::$app->taskService->haveCurrentStatus($task, Yii::$app->params['taskSentForReviewByTheWorkerStatusId'])) {
+            throw new AccessDeniedException('Задача должна иметь статус: "Отправлена исполнителем на проверку"!');
+        }
+
         Yii::$app->taskService->confirmTaskExecution($task);
         return true;
     }
