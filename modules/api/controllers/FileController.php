@@ -15,7 +15,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\rest\ActiveController;
 use yii\data\ActiveDataProvider;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
+use yii\web\ConflictHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 
@@ -138,7 +138,7 @@ class FileController extends ActiveController
         $task = Task::findOne($task_id);
 
         if ($task['owner_id'] !== \Yii::$app->user->id && $task['worker_id'] !== \Yii::$app->user->id) {
-            throw new AccessDeniedException("Access error. You are not owner or worker of this task!");
+            throw new ConflictHttpException("Access error. You are not owner or worker of this task!");
         }
 
         $requestParams = \Yii::$app->getRequest()->getQueryParams();

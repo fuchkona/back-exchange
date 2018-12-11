@@ -279,13 +279,36 @@
                             <code style="white-space: pre-line">
                                 {
                                 "success": false,
-                                "data": {
+                                "data": [
+                                {
                                 "name": "Not Found",
                                 "message": "Task is not found.",
                                 "code": 0,
                                 "status": 404,
                                 "type": "yii\\web\\NotFoundHttpException"
+                                },
+                                {
+                                "name": "Conflict",
+                                "message": "You can not delete this task. You are not owner of this task!",
+                                "code": 0,
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
+                                },
+                                {
+                                "name": "Conflict",
+                                "message": "You can not delete this task. It has worker!",
+                                "code": 0,
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
+                                },
+                                {
+                                "name": "Conflict",
+                                "message": "Задача должна быть в статусе новой!",
+                                "code": 0,
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
                                 }
+                                ]
                                 }
                             </code>
                         </p>
@@ -313,14 +336,22 @@
                             <code style="white-space: pre-line">
                                 {
                                 "success": false,
+                                "data": [
+                                {
+                                "name": "Conflict",
+                                "message": "Вы не являетесь владельцем данной задачи!",
+                                "code": 0,
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
+                                },
                                 "data": {
-                                "name": "Exception",
+                                "name": "Conflict",
                                 "message": "Задача должна быть в статусе новой!",
                                 "code": 0,
-                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
-                                "file": "/app/modules/api/controllers/TaskController.php",
-                                "line": 82,
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
                                 }
+                                ]
                                 }
                             </code>
                         </p>
@@ -350,22 +381,18 @@
                                 "success": false,
                                 "data": [
                                 {
-                                "name": "Exception",
+                                "name": "Conflict",
                                 "message": "Вы не являетесь исполнителем данной задачи!",
                                 "code": 0,
-                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
-                                "file": "/app/services/TaskService.php",
-                                "line": 102,
-                                "stack-trace": [...]
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
                                 },
                                 {
-                                "name": "Exception",
+                                "name": "Conflict",
                                 "message": "Задача должна иметь статус: \"В работе\"!",
                                 "code": 0,
-                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
-                                "file": "/app/modules/api/controllers/TaskController.php",
-                                "line": 205,
-                                "stack-trace": [...]
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
                                 }
                                 ]
                             </code>
@@ -396,24 +423,21 @@
                                 "success": false,
                                 "data": [
                                 {
-                                "name": "Exception",
-                                "message": "Задача должна иметь статус: \"Отправлена исполнителем на проверку\"!",
-                                "code": 0,
-                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
-                                "file": "/app/modules/api/controllers/TaskController.php",
-                                "line": 173,
-                                "stack-trace": [...]
-                                },
-                                {
-                                "name": "Exception",
+                                "name": "Conflict",
                                 "message": "Вы не являетесь владельцем данной задачи!",
                                 "code": 0,
-                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
-                                "file": "/app/services/TaskService.php",
-                                "line": 85,
-                                "stack-trace": [...]
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
+                                },
+                                {
+                                "name": "Conflict",
+                                "message": "Задача должна иметь статус: \"Отправлена исполнителем на проверку\"!",
+                                "code": 0,
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
                                 }
                                 ]
+                                }
                             </code>
                         </p>
                     </div>
@@ -442,24 +466,21 @@
                                 "success": false,
                                 "data": [
                                 {
-                                "name": "Exception",
-                                "message": "Задача должна иметь статус: \"Отправлена исполнителем на проверку\"!",
-                                "code": 0,
-                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
-                                "file": "/app/modules/api/controllers/TaskController.php",
-                                "line": 173,
-                                "stack-trace": [...]
-                                },
-                                {
-                                "name": "Exception",
+                                "name": "Conflict",
                                 "message": "Вы не являетесь владельцем данной задачи!",
                                 "code": 0,
-                                "type": "Symfony\\Component\\Finder\\Exception\\AccessDeniedException",
-                                "file": "/app/services/TaskService.php",
-                                "line": 85,
-                                "stack-trace": [...]
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
+                                },
+                                {
+                                "name": "Conflict",
+                                "message": "Задача должна иметь статус: \"Отправлена исполнителем на проверку\"!",
+                                "code": 0,
+                                "status": 409,
+                                "type": "yii\\web\\ConflictHttpException"
                                 }
                                 ]
+                                }
                             </code>
                         </p>
                     </div>

@@ -16,7 +16,7 @@ use app\services\events\SentTaskForReviewEvent;
 use yii\base\Component;
 use app\services\events\CreateTaskEvent;
 use app\models\Task;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
+use yii\web\ConflictHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\IdentityInterface;
 
@@ -89,13 +89,14 @@ class TaskService extends Component
      * @param IdentityInterface $user
      * @param Task $task
      * @return bool
+     * @throws ConflictHttpException
      */
     public function areYouOwner (IdentityInterface $user, Task $task)
     {
         if ($user->getId() === $task->owner_id) {
             return true;
         } else {
-            throw new AccessDeniedException("Вы не являетесь владельцем данной задачи!");
+            throw new ConflictHttpException("Вы не являетесь владельцем данной задачи!");
         }
 
     }
@@ -104,6 +105,7 @@ class TaskService extends Component
      * @param IdentityInterface $user
      * @param Task $task
      * @return bool
+     * @throws ConflictHttpException
      * @throws NotFoundHttpException
      */
     public function areYouWorker (IdentityInterface $user, Task $task)
@@ -112,7 +114,7 @@ class TaskService extends Component
             if ($user->getId() === $task->worker_id) {
                 return true;
             } else {
-                throw new AccessDeniedException("Вы не являетесь исполнителем данной задачи!");
+                throw new ConflictHttpException("Вы не являетесь исполнителем данной задачи!");
             }
         } else {
             throw new NotFoundHttpException("У данной задачи нет исполнителя!");
