@@ -14,9 +14,9 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\rest\ActiveController;
+use yii\web\ConflictHttpException;
 use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 class RequestController extends ActiveController
 {
@@ -56,7 +56,7 @@ class RequestController extends ActiveController
                             if ($currentUser->getId() == $requester_id) {
                                 return Yii::$app->requestService->canCreate($task_id, $requester_id);
                             } else {
-                                throw new AccessDeniedException("Вы можете делать запрос только от своего имени!");
+                                throw new ConflictHttpException("Вы можете делать запрос только от своего имени!");
                             }
 
                         },

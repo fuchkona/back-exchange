@@ -11,11 +11,10 @@ namespace app\modules\api\controllers;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
-use app\models\User;
 use app\modules\api\models\Request;
 use app\modules\api\models\Task;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\rest\ActiveController;
+use yii\web\ConflictHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ForbiddenHttpException;
 
@@ -63,7 +62,7 @@ class TaskController extends ActiveController
                     [
                         'allow' => true,
                         'roles' => ['@'],
-                        'actions' => ['by-worker', 'create']
+                        'actions' => ['by-worker', 'create', 'index']
                     ],
                 ],
                 'denyCallback' => function () {
@@ -118,9 +117,10 @@ class TaskController extends ActiveController
     }
 
     /**
-     * @param $request_id
      * @param $task_id
+     * @param $request_id
      * @return bool
+     * @throws ConflictHttpException
      * @throws NotFoundHttpException
      * @throws \yii\db\Exception
      */
@@ -134,10 +134,10 @@ class TaskController extends ActiveController
         $user = Yii::$app->user->identity;
 
         if (!Yii::$app->taskService->haveCurrentStatus($task, Yii::$app->params['newTaskStatusId'])) {
-            throw new AccessDeniedException("Задача должна быть в статусе новой!");
+            throw new ConflictHttpException("Задача должна быть в статусе новой!");
         }
         if ($user->time < $request->need_time) {
-            throw new AccessDeniedException("У вас недостаточно времени!");
+            throw new ConflictHttpException("У вас недостаточно времени!");
         }
         $transaction = Yii::$app->db->beginTransaction();
         try {
@@ -163,6 +163,7 @@ class TaskController extends ActiveController
     /**
      * @param $task_id
      * @return bool
+     * @throws ConflictHttpException
      * @throws \yii\db\Exception
      */
     public function actionConfirmExecution ($task_id)
@@ -171,7 +172,7 @@ class TaskController extends ActiveController
         $worker = $task->worker;
 
         if (!Yii::$app->taskService->haveCurrentStatus($task, Yii::$app->params['taskSentForReviewByTheWorkerStatusId'])) {
-            throw new AccessDeniedException('Задача должна иметь статус: "Отправлена исполнителем на проверку"!');
+            throw new ConflictHttpException('Задача должна иметь статус: "Отправлена исполнителем на проверку"!');
         }
 
         $transaction = Yii::$app->db->beginTransaction();
@@ -197,31 +198,31 @@ class TaskController extends ActiveController
     /**
      * @param $task_id
      * @return bool
-     * @throws \yii\db\Exception
+     * @throws ConflictHttpException
      */
     public function actionDenyExecution ($task_id)
     {
         $task = Task::findOne($task_id);
-        $worker = $task->worker;
 
         if (!Yii::$app->taskService->haveCurrentStatus($task, Yii::$app->params['taskSentForReviewByTheWorkerStatusId'])) {
-            throw new AccessDeniedException('Задача должна иметь статус: "Отправлена исполнителем на проверку"!');
+            throw new ConflictHttpException('Задача должна иметь статус: "Отправлена исполнителем на проверку"!');
         }
 
-        Yii::$app->taskService->confirmTaskExecution($task);
+        Yii::$app->taskService->denyTaskExecution($task);
         return true;
     }
 
     /**
      * @param $task_id
      * @return bool
+     * @throws ConflictHttpException
      */
     public function actionSendForReview ($task_id)
     {
         $task = Task::findOne($task_id);
 
         if (!Yii::$app->taskService->haveCurrentStatus($task, Yii::$app->params['taskAtWorkStatusId'])) {
-            throw new AccessDeniedException('Задача должна иметь статус: "В работе"!');
+            throw new ConflictHttpException('Задача должна иметь статус: "В работе"!');
         }
 
         Yii::$app->taskService->sendTaskForReview($task);
@@ -231,19 +232,16 @@ class TaskController extends ActiveController
     /**
      * @param $task_id
      * @return array
-     * @throws NotFoundHttpException
+     * @throws ConflictHttpException
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($task_id)
     {
         $task = Task::findOne($task_id);
-        if (!$task) {
-            throw new NotFoundHttpException("Task is not found.");
-        }
 
         if (!Yii::$app->taskService->haveCurrentStatus($task, Yii::$app->params['newTaskStatusId'])) {
-            throw new AccessDeniedException("Задача должна быть в статусе новой!");
+            throw new ConflictHttpException("Задача должна быть в статусе новой!");
         }
         $task->delete();
         return [

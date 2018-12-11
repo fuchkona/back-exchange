@@ -10,8 +10,8 @@ namespace app\services;
 
 
 use app\models\File;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use yii\base\Component;
+use yii\web\ConflictHttpException;
 use yii\web\IdentityInterface;
 
 class FileService extends Component
@@ -21,13 +21,14 @@ class FileService extends Component
      * @param IdentityInterface $user
      * @param File $file
      * @return bool
+     * @throws ConflictHttpException
      */
     public function areYouOwner (IdentityInterface $user, File $file)
     {
         if ($user->getId() === $file->user_id) {
             return true;
         } else {
-            throw new AccessDeniedException("Вы не являетесь владельцем данного файла!");
+            throw new ConflictHttpException("Вы не являетесь владельцем данного файла!");
         }
 
     }

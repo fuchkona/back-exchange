@@ -12,8 +12,8 @@ namespace app\services;
 use app\models\Request;
 use app\models\Task;
 use yii\base\Component;
+use yii\web\ConflictHttpException;
 use yii\web\IdentityInterface;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 
 class RequestService extends Component
 {
@@ -28,19 +28,20 @@ class RequestService extends Component
     }
 
     /**
-     * @param $requester_id
      * @param $task_id
+     * @param $requester_id
      * @return bool
+     * @throws ConflictHttpException
      */
     public function canCreate($task_id, $requester_id)
     {
         $request = Request::find()->andWhere(['task_id' => $task_id, 'requester_id' => $requester_id])->exists();
         if ($request) {
-            throw new AccessDeniedException("Вы уже сделали запрос на выполнение этой задачи!");
+            throw new ConflictHttpException("Вы уже сделали запрос на выполнение этой задачи!");
         }
         $task = Task::find()->andWhere(['id' => $task_id, 'owner_id' => $requester_id])->exists();
         if ($task) {
-            throw new AccessDeniedException("Вы не можете делать запрос на выполнение своей задачи!");
+            throw new ConflictHttpException("Вы не можете делать запрос на выполнение своей задачи!");
         }
         return true;
     }
