@@ -62,7 +62,7 @@ class TaskController extends ActiveController
                     [
                         'allow' => true,
                         'roles' => ['@'],
-                        'actions' => ['by-worker', 'create', 'index']
+                        'actions' => ['by-worker', 'create', 'index', 'view']
                     ],
                 ],
                 'denyCallback' => function () {
