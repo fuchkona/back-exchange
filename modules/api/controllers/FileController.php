@@ -134,7 +134,7 @@ class FileController extends ActiveController
      */
     public function actionFilesByTask ($task_id)
     {
-        $query = File::find()->byTask($task_id);
+        $query = File::find()->byTask($task_id)->all();
         $task = Task::findOne($task_id);
 
         if ($task->owner_id !== \Yii::$app->user->id && $task->worker_id !== \Yii::$app->user->id) {
