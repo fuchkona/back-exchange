@@ -61,11 +61,11 @@ class FileController extends ActiveController
                         'roles' => ['@'],
                         'matchCallback' => function ($rules, $action) {
                             $currentUser = Yii::$app->user->identity;
-                            $file = File::findOne(['id' => Yii::$app->request->get('file_id')]);
+                            $task = Task::findOne(['id' => Yii::$app->request->get('task_id')]);
 
                             if (isset($file)){
-                                return Yii::$app->taskService->areYouWorker($currentUser, $file->task)
-                                    || Yii::$app->taskService->areYouOwner($currentUser, $file->task);
+                                return Yii::$app->taskService->areYouWorker($currentUser, $task)
+                                    || Yii::$app->taskService->areYouOwner($currentUser, $task);
                             }
                             else{
                                 throw new NotFoundHttpException('File is not found');
@@ -134,7 +134,10 @@ class FileController extends ActiveController
      */
     public function actionFilesByTask ($task_id)
     {
-        $query = File::find()->byTask($task_id)->all();
+        $query = File::find()->byTask($task_id);
+
+
+
         $task = Task::findOne($task_id);
 
         if ($task->owner_id !== \Yii::$app->user->id && $task->worker_id !== \Yii::$app->user->id) {
