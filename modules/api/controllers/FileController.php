@@ -72,7 +72,7 @@ class FileController extends ActiveController
                 ],
                 'denyCallback' => function () {
                     throw new ForbiddenHttpException('Вы не являетесь исполнителем или владельцем данной задачи,
-                    правда доступа ограничены');
+                    права доступа ограничены');
                 }
             ],
         ];
