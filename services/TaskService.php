@@ -89,34 +89,20 @@ class TaskService extends Component
      * @param IdentityInterface $user
      * @param Task $task
      * @return bool
-     * @throws ConflictHttpException
      */
     public function areYouOwner (IdentityInterface $user, Task $task)
     {
-        if ($user->getId() === $task->owner_id) {
-            return true;
-        } else {
-            throw new ConflictHttpException("Вы не являетесь владельцем данной задачи!");
-        }
-
+        return $user->getId() === $task->owner_id;
     }
 
     /**
      * @param IdentityInterface $user
      * @param Task $task
      * @return bool
-     * @throws ConflictHttpException
-     * @throws NotFoundHttpException
      */
     public function areYouWorker (IdentityInterface $user, Task $task)
     {
-        if ($task->worker_id) {
-            if ($user->getId() === $task->worker_id) {
-                return true;
-            } else {
-                throw new ConflictHttpException("Вы не являетесь исполнителем данной задачи!");
-            }
-        }
+        return $user->getId() === $task->worker_id;
     }
 
     /**
