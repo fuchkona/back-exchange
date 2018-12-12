@@ -137,8 +137,8 @@ class FileController extends ActiveController
         $query = File::find()->byTask($task_id);
         $task = Task::findOne($task_id);
 
-        if ($task['owner_id'] !== \Yii::$app->user->id && $task['worker_id'] !== \Yii::$app->user->id) {
-            throw new ConflictHttpException("Access error. You are not owner or worker of this task!");
+        if ($task->owner_id !== \Yii::$app->user->id && $task->worker_id !== \Yii::$app->user->id) {
+            throw new ConflictHttpException("Файлы не будут загружены, у вас нет прав для просмотра файлов");
         }
 
         $requestParams = \Yii::$app->getRequest()->getQueryParams();
