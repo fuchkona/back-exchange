@@ -71,7 +71,7 @@ class FileController extends ActiveController
                     ]
                 ],
                 'denyCallback' => function () {
-                    throw new ForbiddenHttpException('You a not have permissions for this action');
+                    throw new ForbiddenHttpException('У вас нет прав на данное действие');
                 }
             ],
         ];
