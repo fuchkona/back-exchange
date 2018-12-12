@@ -63,13 +63,9 @@ class FileController extends ActiveController
                             $currentUser = Yii::$app->user->identity;
                             $task = Task::findOne(['id' => Yii::$app->request->get('task_id')]);
 
-                            if (isset($file)){
-                                return Yii::$app->taskService->areYouWorker($currentUser, $task)
+                            return Yii::$app->taskService->areYouWorker($currentUser, $task)
                                     || Yii::$app->taskService->areYouOwner($currentUser, $task);
-                            }
-                            else{
-                                throw new NotFoundHttpException('File is not found');
-                            }
+
                         }
                     ]
                 ],
