@@ -67,12 +67,12 @@ class FileController extends ActiveController
                                     || Yii::$app->taskService->areYouOwner($currentUser, $task);
 
                         },
-                        'denyCallback' => function () {
-                            throw new ForbiddenHttpException('У вас нет права доступа на просмотр файлов, так как
-                            вы не являетесь ни владельцем ни исполнителем данной задачи');
-                        },
+
                     ]
                 ],
+                'denyCallback' => function () {
+                    throw new ForbiddenHttpException('You a not have permissions for this action');
+                }
             ],
         ];
     }
