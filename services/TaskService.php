@@ -116,8 +116,6 @@ class TaskService extends Component
             } else {
                 throw new ConflictHttpException("Вы не являетесь исполнителем данной задачи!");
             }
-        } else {
-            throw new NotFoundHttpException("У данной задачи нет исполнителя!");
         }
     }
 
