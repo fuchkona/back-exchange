@@ -27,6 +27,7 @@ class Module extends \yii\base\Module
             'except' => [
                 'site/login',
                 'site/signup',
+                'file/load-file',
             ],
         ];
 

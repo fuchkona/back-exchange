@@ -52,8 +52,13 @@ class FileController extends ActiveController
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['my-files', 'index', 'load-file', 'create'],
+                        'actions' => ['my-files', 'index', 'create'],
                         'roles' => ['@']
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['load-file'],
+                        'roles' => ['?'],
                     ],
                     [
                         'allow' => true,
