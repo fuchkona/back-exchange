@@ -7,6 +7,7 @@
     <?= $this->render("api/site.php") ?>
     <?= $this->render("api/tasks.php") ?>
     <?= $this->render("api/comments.php") ?>
+    <?= $this->render("api/files.php") ?>
     <?= $this->render("api/requests.php") ?>
     <?= $this->render("api/user.php") ?>
 
