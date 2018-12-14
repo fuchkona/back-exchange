@@ -49,9 +49,9 @@ class PasswordChangeForm extends Model
     public function attributeLabels()
     {
         return [
-            'newPassword' => 'Поле новый пароль',
-            'newPasswordRepeat' =>  'Поле старый пароль',
-            'currentPassword' => 'Поле повторите пароль',
+            'newPassword' => 'Новый пароль',
+            'newPasswordRepeat' =>  'Старый пароль',
+            'currentPassword' => 'Повторите пароль',
         ];
     }
 
