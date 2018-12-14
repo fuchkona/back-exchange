@@ -49,9 +49,9 @@ class PasswordChangeForm extends Model
     public function attributeLabels()
     {
         return [
-            'newPassword' => 'User new password',
-            'newPasswordRepeat' =>  'User repeat password',
-            'currentPassword' => 'User current password',
+            'newPassword' => 'Поле новый пароль',
+            'newPasswordRepeat' =>  'Поле старый пароль',
+            'currentPassword' => 'Поле повторите пароль',
         ];
     }
 
@@ -70,7 +70,7 @@ class PasswordChangeForm extends Model
     {
         if (!$this->hasErrors()) {
             if (!$this->_user->validatePassword($this->currentPassword)) {
-                $this->addError($attribute, 'Incorrect password.');
+                $this->addError($attribute, 'Не верный пароль');
             }
         }
     }
